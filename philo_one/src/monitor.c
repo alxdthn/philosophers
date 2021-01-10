@@ -1,4 +1,7 @@
-#include "philosophers.h"
+#include "philo_one.h"
+#include "philo_utils.h"
+#include "philo_print.h"
+#include "philo_time.h"
 
 void monitor_process(t_program *program) {
 	t_philosopher *philosophers;
@@ -9,15 +12,14 @@ void monitor_process(t_program *program) {
 	while (TRUE) {
 		philosophers = program->philosophers;
 		i            = 0;
-		while (i < program->number_of_philosophers) {
+		while (i < program->attrs.number_of_philosophers) {
 			current_time = get_current_time_stamp();
 			philosopher  = &philosophers[i++];
 			if (philosopher->error) {
-				printf("ERROR: %ld ms %d %s\n", current_time, philosopher->id, philosopher->error);
 				exit(EXIT_FAILURE);
 			}
-			if (philosopher->status != EATING && current_time - philosopher->last_eating > program->time_to_die) {
-				printf("%ld ms %d died\n", get_time_offset(program), philosopher->id);
+			if (philosopher->status != EATING && current_time - philosopher->last_eating > program->attrs.time_to_die) {
+				print_status(get_time_offset(program->start_time), philosopher->id, " died\n");
 				exit(EXIT_SUCCESS);
 			}
 		}
