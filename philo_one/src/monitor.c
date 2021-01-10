@@ -1,13 +1,11 @@
 #include "philosophers.h"
 
-void *monitor_process(void *arg) {
-	t_program     *program;
+void monitor_process(t_program *program) {
 	t_philosopher *philosophers;
 	t_philosopher *philosopher;
 	long          current_time;
 	register int  i;
 
-	program = arg;
 	while (TRUE) {
 		philosophers = program->philosophers;
 		i            = 0;
@@ -16,13 +14,14 @@ void *monitor_process(void *arg) {
 			philosopher  = &philosophers[i++];
 			if (philosopher->error) {
 				printf("ERROR: %ld ms %d %s\n", current_time, philosopher->id, philosopher->error);
-				pthread_exit(NULL);
+				exit(EXIT_FAILURE);
 			}
 			if (philosopher->status != EATING && current_time - philosopher->last_eating > program->time_to_die) {
-				printf("%ld ms %d died (error %ld ms)\n", get_time_offset(program), philosopher->id, -(program->time_to_die - (current_time - philosopher->last_eating)));
-				pthread_exit(NULL);
+				printf("%ld ms %d died\n", get_time_offset(program), philosopher->id);
+				exit(EXIT_SUCCESS);
 			}
 		}
 		usleep(program->monitor_frequency);
 	}
 }
+

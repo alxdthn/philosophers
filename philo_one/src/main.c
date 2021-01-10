@@ -1,14 +1,13 @@
-#include <errno.h>
 #include "philosophers.h"
 
 int error(char *message) {
-	printf("ERROR: %s\n", message);
+	printf("%s\n", message);
 	return 1;
 }
 
 void eating(t_philosopher *philosopher, t_program *program) {
 	if (philosopher->status == THINKING) {
-		printf("%ld ms %d is eating\n", get_time_offset(program), philosopher->id);
+		print_status(get_time_offset(program),  philosopher->id, "is eating");
 		philosopher->status = EATING;
 		usleep(program->time_to_eat);
 		philosopher->last_eating = get_current_time_stamp();
@@ -36,6 +35,23 @@ void thinking(t_philosopher *philosopher, t_program *program) {
 	}
 }
 
+void take_forks(t_philosopher *philosopher, t_program *program) {
+	pthread_mutex_lock(&program->fork_taking_mutex);
+
+	pthread_mutex_lock(philosopher->left_hand_fork);
+	printf("%ld ms %d has taken a fork (left)\n", get_time_offset(program), philosopher->id);
+
+	pthread_mutex_lock(philosopher->right_hand_fork);
+	printf("%ld ms %d has taken a fork (right)\n", get_time_offset(program), philosopher->id);
+
+	pthread_mutex_unlock(&program->fork_taking_mutex);
+}
+
+void drop_forks(t_philosopher *philosopher) {
+	pthread_mutex_unlock(philosopher->right_hand_fork);
+	pthread_mutex_unlock(philosopher->left_hand_fork);
+}
+
 void *philosopher_process(void *arg) {
 	t_philosopher_process_argument *argument;
 	t_program                      *program;
@@ -47,28 +63,10 @@ void *philosopher_process(void *arg) {
 
 	pthread_detach(philosopher->thread);
 	free(argument);
-	while (program->is_running) {
-
-		pthread_mutex_lock(&program->fork_taking_mutex);
-
-		pthread_mutex_lock(philosopher->left_hand_fork);
-		printf("%ld ms %d has taken a fork (left)\n", get_time_offset(program), philosopher->id);
-
-		if (pthread_mutex_lock(philosopher->right_hand_fork) == EBUSY)
-		{
-			printf("AAA");
-			pthread_mutex_unlock(philosopher->left_hand_fork);
-		}
-
-		printf("%ld ms %d has taken a fork (right)\n", get_time_offset(program), philosopher->id);
-
-		pthread_mutex_unlock(&program->fork_taking_mutex);
-
+	while (TRUE) {
+		take_forks(philosopher, program);
 		eating(philosopher, program);
-
-		pthread_mutex_unlock(philosopher->right_hand_fork);
-		pthread_mutex_unlock(philosopher->left_hand_fork);
-
+		drop_forks(philosopher);
 		sleeping(philosopher, program);
 		thinking(philosopher, program);
 	}
@@ -136,35 +134,65 @@ int run_philosophers(t_program *program) {
 	return TRUE;
 }
 
-int main(void) {
+int get_value(char *arg, int *dst, int ratio) {
+	register int i;
+	int          value;
+
+	i = 0;
+	while (arg[i]) {
+		if (arg[i] < '0' || arg[i] > '9')
+			return 1;
+		i++;
+	}
+	value = atoi(arg) * ratio;
+	if (value < 0)
+		return 1;
+	*dst = value;
+	return 0;
+}
+
+int parse_args(int ac, char **av, t_program *program) {
+	if (ac < 5 || ac > 6)
+		return error(
+				"USAGE: ./philo_one number_of_philosophers time_to_die time_to_eat time_to_sleep [number_of_times_each_philosopher_must_eat]");
+	if (get_value(av[1], &program->number_of_philosophers, 1))
+		return error("bad number_of_philosophers");
+	if (get_value(av[2], &program->time_to_die, 1))
+		return error("bad time_to_die");
+	if (get_value(av[3], &program->time_to_eat, MICRO_SEC_IN_MILLIS))
+		return error("bad time_to_eat");
+	if (get_value(av[4], &program->time_to_sleep, MICRO_SEC_IN_MILLIS))
+		return error("bad time_to_sleep");
+	if (ac == 6 && get_value(av[5], &program->number_of_times_each_philosopher_must_eat, 1))
+		return error("bad number_of_times_each_philosopher_must_eat");
+	return 0;
+}
+
+int main(int ac, char **av) {
 	t_program program;
-	pthread_t monitor_thread;
 
 	bzero(&program, sizeof(t_program));
 
-	program.number_of_philosophers = 4;
-	program.monitor_frequency      = 1 * 1000 * 9;
-	program.time_to_eat            = 1 * 1000 * 1000;
-	program.time_to_sleep          = 1 * 1000 * 1000;
-	program.time_to_die            = 3 * 1000;
-	program.is_running             = TRUE;
+	program.monitor_frequency                         = MONITOR_FREQUENCY;
+	program.number_of_times_each_philosopher_must_eat = 1;
+
+	if (parse_args(ac, av, &program))
+		return 1;
 
 	create_forks(&program);
 	if (!program.forks)
-		return error("init forks");
+		return error("error init forks");
 
-	pthread_mutex_init(&program.fork_taking_mutex, NULL);
+	if (pthread_mutex_init(&program.fork_taking_mutex, NULL))
+		return error("error pthread mutex init");
 
 	create_philosophers(&program);
 	if (!program.philosophers)
-		return error("init philosophers");
+		return error("error init philosophers");
 
 	if (!run_philosophers(&program))
-		return error("run philosophers");
+		return error("error run philosophers");
 
-	if (pthread_create(&monitor_thread, NULL, monitor_process, &program))
-		return error("init monitor");
-
-	pthread_join(monitor_thread, NULL);
+	monitor_process(&program);
 	return (0);
 }
