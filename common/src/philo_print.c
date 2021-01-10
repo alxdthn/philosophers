@@ -14,13 +14,13 @@ void print_status(unsigned long time, int philosopher_id, char *status) {
 	len_info[TIME]   = ft_strlen(string_info[TIME]);
 	len_info[ID]     = ft_strlen(string_info[ID]);
 	len_info[STATUS] = ft_strlen(status);
-	full_len = len_info[TIME] + 4 + len_info[ID] + len_info[STATUS];
+	full_len = len_info[TIME] + 3 + len_info[ID] + len_info[STATUS];
 	result   = malloc(sizeof(char) * full_len);
 	if (result) {
 		ft_memcpy(result, string_info[TIME], len_info[TIME]);
-		ft_memcpy(result + len_info[TIME], " ms ", 4);
-		ft_memcpy(result + len_info[TIME] + 4, string_info[ID], len_info[ID]);
-		ft_memcpy(result + len_info[TIME] + 4 + len_info[ID], status, len_info[STATUS]);
+		ft_memcpy(result + len_info[TIME], "ms ", 3);
+		ft_memcpy(result + len_info[TIME] + 3, string_info[ID], len_info[ID]);
+		ft_memcpy(result + len_info[TIME] + 3 + len_info[ID], status, len_info[STATUS]);
 		write(1, result, full_len);
 	}
 	free(string_info[TIME]);

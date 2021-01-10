@@ -1,46 +1,39 @@
 #ifndef PHILOSOPHERS_H
 # define PHILOSOPHERS_H
 
-# include <pthread.h>
-# include <stdlib.h>
-# include <string.h>
-# include <unistd.h>
-# include "philo_parse.h"
-
-# define THINKING 0
-# define EATING 1
-# define SLIPPING 2
-
-# define MONITOR_FREQUENCY (1 * 1000 * 9)
+# include "philo_utils.h"
 
 typedef struct s_philosopher {
-	int             id;
-	int             status;
-	long            last_eating;
-	char            *error;
+	t_philo_attrs 	attrs;
 	pthread_t       thread;
 	pthread_mutex_t *left_hand_fork;
 	pthread_mutex_t *right_hand_fork;
 } t_philosopher;
 
-typedef struct s_program {
-
-	int monitor_frequency;
-	long start_time;
-
-	t_parse_result	attrs;
-
+typedef struct s_philo_one {
+	t_program_attrs attrs;
 	pthread_mutex_t fork_taking_mutex;
 	pthread_mutex_t *forks;
-
-	t_philosopher *philosophers;
-} t_program;
+	t_philosopher   *philosophers;
+} t_philo_one;
 
 typedef struct s_philosopher_process_argument {
-	t_program     *program;
+	t_philo_one   *program;
 	t_philosopher *philosopher;
 } t_philosopher_process_argument;
 
-void monitor_process(t_program *program);
+bool create_philosophers(t_philo_one *program);
+
+bool create_forks(t_philo_one *program);
+
+void eating(t_philosopher *philosopher, t_philo_one *program);
+
+void sleeping(t_philosopher *philosopher, t_philo_one *program);
+
+void thinking(t_philosopher *philosopher, t_philo_one *program);
+
+void take_forks(t_philosopher *philosopher, t_philo_one *program);
+
+void drop_forks(t_philosopher *philosopher, t_philo_one *program);
 
 #endif
