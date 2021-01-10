@@ -54,6 +54,6 @@ void monitor_process(t_program *program);
 
 void print_number(unsigned long time);
 
-void print_status(long time, int philosopher_id, char *status);
+void print_status(unsigned long time, int philosopher_id, char *status);
 
 #endif

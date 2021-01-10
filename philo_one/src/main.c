@@ -7,7 +7,7 @@ int error(char *message) {
 
 void eating(t_philosopher *philosopher, t_program *program) {
 	if (philosopher->status == THINKING) {
-		print_status(get_time_offset(program),  philosopher->id, "is eating");
+		print_status(get_time_offset(program),  philosopher->id, " is eating\n");
 		philosopher->status = EATING;
 		usleep(program->time_to_eat);
 		philosopher->last_eating = get_current_time_stamp();
@@ -18,7 +18,7 @@ void eating(t_philosopher *philosopher, t_program *program) {
 
 void sleeping(t_philosopher *philosopher, t_program *program) {
 	if (philosopher->status == EATING) {
-		printf("%ld ms %d is sleeping\n", get_time_offset(program), philosopher->id);
+		print_status(get_time_offset(program), philosopher->id, " is sleeping\n");
 		philosopher->status = SLIPPING;
 		usleep(program->time_to_sleep);
 	} else {
@@ -28,7 +28,7 @@ void sleeping(t_philosopher *philosopher, t_program *program) {
 
 void thinking(t_philosopher *philosopher, t_program *program) {
 	if (philosopher->status == SLIPPING) {
-		printf("%ld ms %d is thinking\n", get_time_offset(program), philosopher->id);
+		print_status(get_time_offset(program), philosopher->id, " is thinking\n");
 		philosopher->status = THINKING;
 	} else {
 		philosopher->error = "bad status on thinking";
@@ -39,10 +39,10 @@ void take_forks(t_philosopher *philosopher, t_program *program) {
 	pthread_mutex_lock(&program->fork_taking_mutex);
 
 	pthread_mutex_lock(philosopher->left_hand_fork);
-	printf("%ld ms %d has taken a fork (left)\n", get_time_offset(program), philosopher->id);
+	print_status(get_time_offset(program), philosopher->id, " has taken a fork (left)\n");
 
 	pthread_mutex_lock(philosopher->right_hand_fork);
-	printf("%ld ms %d has taken a fork (right)\n", get_time_offset(program), philosopher->id);
+	print_status(get_time_offset(program), philosopher->id, " has taken a fork (right)\n");
 
 	pthread_mutex_unlock(&program->fork_taking_mutex);
 }
