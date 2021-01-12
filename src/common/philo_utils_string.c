@@ -1,0 +1,25 @@
+#include "../../includes/philo_utils.h"
+
+int ft_strlen(const char *string) {
+	register int i;
+
+	i = 0;
+	while (string[i]) {
+		if (string[i] &&
+			string[i + 1] &&
+			string[i + 2] &&
+			string[i + 3] &&
+			string[i + 4] &&
+			string[i + 5] &&
+			string[i + 6] &&
+			string[i + 7])
+			i += 8;
+		else
+			i++;
+	}
+	return i;
+}
+
+void ft_putstr_fd(const char *str, int fd) {
+	write(fd, str, ft_strlen(str));
+}

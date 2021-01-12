@@ -3,81 +3,74 @@ project(philosophers C)
 
 set(CMAKE_C_STANDARD 11)
 
-add_executable(philo_one_src
-        philo_one_src/src/philo_one.c
-        philo_one_src/src/philo_one_init.c
-        philo_one_src/src/philo_one_operations.c
-        philo_one_src/includes/philo_one.h
-        common/src/philo_time.c
-        common/src/philo_print.c
-        common/src/philo_parse.c
-        common/src/philo_utils.c
-        common/src/philo_mutex.c
-        common/src/philo_monitor.c
-        common/src/philo_utils_memory.c
-        common/src/philo_utils_string.c
-        common/src/philo_utils_number.c
-        common/includes/philo_print.h
-        common/includes/philo_utils.h)
+add_executable(philo_one
+        src/philo_one/philo_one.c
+        src/philo_one/philo_one_init.c
+        src/philo_one/philo_one_operations.c
+        includes/philo_one.h
+        src/common/philo_time.c
+        src/common/philo_print.c
+        src/common/philo_parse.c
+        src/common/philo_utils.c
+        src/common/philo_mutex.c
+        src/common/philo_monitor.c
+        src/common/philo_utils_memory.c
+        src/common/philo_utils_string.c
+        src/common/philo_utils_number.c
+        includes/philo_print.h
+        includes/philo_utils.h)
 
-target_include_directories(philo_one_src PUBLIC
-        philo_one_src/includes
-        common/includes)
+target_include_directories(philo_one PUBLIC includes)
 
-add_executable(philo_two_src
-        philo_two_src/src/philo_two.c
-        philo_two_src/src/philo_two_exit.c
-        philo_two_src/src/philo_two_init.c
-        philo_two_src/src/philo_two_operations.c
-        philo_two_src/includes/philo_two.h
-        common/src/philo_time.c
-        common/src/philo_print.c
-        common/src/philo_parse.c
-        common/src/philo_monitor.c
-        common/src/philo_semaphore.c
-        common/src/philo_utils.c
-        common/src/philo_utils_memory.c
-        common/src/philo_utils_string.c
-        common/src/philo_utils_number.c
-        common/includes/philo_print.h
-        common/includes/philo_utils.h)
+add_executable(philo_two
+        src/philo_two/philo_two.c
+        src/philo_two/philo_two_exit.c
+        src/philo_two/philo_two_init.c
+        src/philo_two/philo_two_operations.c
+        includes/philo_two.h
+        src/common/philo_time.c
+        src/common/philo_print.c
+        src/common/philo_parse.c
+        src/common/philo_monitor.c
+        src/common/philo_semaphore.c
+        src/common/philo_utils.c
+        src/common/philo_utils_memory.c
+        src/common/philo_utils_string.c
+        src/common/philo_utils_number.c
+        includes/philo_print.h
+        includes/philo_utils.h)
 
-target_include_directories(philo_two_src PUBLIC
-        philo_two_src/includes
-        common/includes)
+target_include_directories(philo_two PUBLIC includes)
 
-add_executable(philo_three_src
-        philo_three_src/src/philo_three.c
-        philo_three_src/src/philo_three_exit.c
-        philo_three_src/src/philo_three_init.c
-        philo_three_src/includes/philo_three.h
-        common/src/philo_time.c
-        common/src/philo_print.c
-        common/src/philo_parse.c
-        common/src/philo_utils.c
-        common/src/philo_utils_memory.c
-        common/src/philo_utils_string.c
-        common/src/philo_utils_number.c
-        common/src/philo_semaphore.c
-        common/src/philo_monitor.c philo_three_src/src/philo_three_operations.c)
+add_executable(philo_three
+        src/philo_three/philo_three.c
+        src/philo_three/philo_three_exit.c
+        src/philo_three/philo_three_init.c
+        src/philo_three/philo_three_operations.c
+        includes/philo_three.h
+        src/common/philo_time.c
+        src/common/philo_print.c
+        src/common/philo_parse.c
+        src/common/philo_utils.c
+        src/common/philo_utils_memory.c
+        src/common/philo_utils_string.c
+        src/common/philo_utils_number.c
+        src/common/philo_semaphore.c
+        src/common/philo_monitor.c)
 
-target_include_directories(philo_three_src PUBLIC
-        philo_three_src/includes
-        common/includes)
+target_include_directories(philo_three PUBLIC includes)
 
 add_executable(test_ft_ultoa
-        common/test/test_ft_ultoa.c
-        common/src/philo_utils_number.c
-        common/src/philo_utils_string.c
-        common/includes/philo_utils.h)
+        test/test_ft_ultoa.c
+        src/common/philo_utils_number.c
+        src/common/philo_utils_string.c
+        includes/philo_utils.h)
 
-target_include_directories(test_ft_ultoa PUBLIC
-        common/includes)
+target_include_directories(test_ft_ultoa PUBLIC includes)
 
 add_executable(test_ft_atoi
-        common/test/test_ft_atoi.c
-        common/src/philo_utils_number.c
-        common/includes/philo_utils.h)
+        test/test_ft_atoi.c
+        src/common/philo_utils_number.c
+        includes/philo_utils.h)
 
-target_include_directories(test_ft_atoi PUBLIC
-        common/includes)
+target_include_directories(test_ft_atoi PUBLIC includes)
