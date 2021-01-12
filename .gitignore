@@ -3,5 +3,7 @@
 .idea
 cmake-build-debug/
 a.out
-./philo_one
+/philo_one
+/philo_two
+/philo_three
 obj

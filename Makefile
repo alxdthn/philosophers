@@ -75,6 +75,8 @@ clean:
 
 fclean: clean
 	rm -f $(PHILO_ONE)
+	rm -f $(PHILO_TWO)
+	rm -f $(PHILO_THREE)
 
 re: fclean all
 
