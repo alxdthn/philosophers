@@ -6,14 +6,16 @@
 /*   By: nalexand <nalexand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 21:54:54 by nalexand          #+#    #+#             */
-/*   Updated: 2021/01/12 22:59:30 by nalexand         ###   ########.fr       */
+/*   Updated: 2021/01/12 23:09:06 by nalexand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_utils.h"
 
-int		ft_numlen(unsigned x)
+int		ft_numlen(unsigned int x)
 {
+	if (x >= 10000000000)
+		return (11);
 	if (x >= 1000000000)
 		return (10);
 	if (x >= 100000000)
@@ -42,17 +44,19 @@ int		ft_isdigit(char c)
 
 char	*ft_ultoa(unsigned long number)
 {
-	char	*result;
-	int		number_len;
+	char			*result;
+	int				number_len;
+	unsigned int	integer;
 
-	number_len = ft_numlen(number);
+	integer = number;
+	number_len = ft_numlen(integer);
 	if (!(result = malloc(sizeof(char) * (number_len + 1))))
 		return (NULL);
 	result[number_len] = '\0';
 	while (--number_len >= 0)
 	{
-		result[number_len] = (char)(number % 10 + '0');
-		number /= 10;
+		result[number_len] = (char)(integer % 10 + '0');
+		integer /= 10;
 	}
 	return (result);
 }

@@ -6,7 +6,7 @@
 /*   By: nalexand <nalexand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 22:57:59 by nalexand          #+#    #+#             */
-/*   Updated: 2021/01/12 22:59:30 by nalexand         ###   ########.fr       */
+/*   Updated: 2021/01/12 22:59:49 by nalexand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ typedef struct		s_program_attrs {
 
 int					parse_args(int ac, char **av, t_program_attrs *result);
 
-int					ft_numlen(unsigned x);
+int					ft_numlen(unsigned int x);
 
 int					ft_strlen(const char *string);
 

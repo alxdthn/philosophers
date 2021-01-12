@@ -1,6 +1,6 @@
 #include <memory.h>
-#include "../../includes/philo_print.h"
-#include "../../includes/philo_utils.h"
+#include "philo_print.h"
+#include "philo_utils.h"
 #include <stdio.h>
 
 #pragma clang diagnostic push
@@ -65,4 +65,8 @@ int main(void) {
 	test_ultoa("3217", 3217);
 	test_ultoa("3218", 3218);
 	test_ultoa("3219", 3219);
+	test_ultoa("2147483647", 2147483647);
+	test_ultoa("2147483648", 2147483648);
+	test_ultoa("0", -1);
+
 }
