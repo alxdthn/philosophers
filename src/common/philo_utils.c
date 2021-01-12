@@ -1,25 +1,48 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo_utils.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nalexand <nalexand@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/12 21:38:47 by nalexand          #+#    #+#             */
+/*   Updated: 2021/01/12 21:42:38 by nalexand         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo_utils.h"
 
-int error(const char *message) {
+int		error(const char *message)
+{
 	ft_putstr_fd(message, 2);
-	return 1;
+	return (1);
 }
 
-int usage() {
-	ft_putstr_fd("USAGE: ./philo_one num die eat sleep [n_eat]\n", 1);
-	ft_putstr_fd("num: is the number of philosophers and also the number of forks.\n\n", 1);
-	ft_putstr_fd("die: is in milliseconds, if a philosopher doesn’t start eating.\n", 1);
-	ft_putstr_fd("     ’die’ milliseconds after starting his last meal\n", 1);
-	ft_putstr_fd("     or the beginning of the simulation, it dies.\n\n", 1);
-	ft_putstr_fd("eat: is in milliseconds and is the time it takes for a philosopher to eat.\n\n", 1);
-	ft_putstr_fd("sleep: s in milliseconds and is the time the philosopher will spend sleeping.\n\n", 1);
-	ft_putstr_fd("n_eat: argument is optional, if all philosophers eat at least ’n_eat’ ", 1);
-	ft_putstr_fd("the simulation will stop.\n", 1);
-	return 1;
+int		usage(char *file_name)
+{
+	ft_putstr("USAGE: ./");
+	ft_putstr(file_name);
+	ft_putstr(" num die eat sleep [n_eat]\n");
+	ft_putstr("num: is the number of philosophers ");
+	ft_putstr("and also the number of forks.\n\n");
+	ft_putstr("die: is in milliseconds, if a philosopher ");
+	ft_putstr("doesn’t start eating.\n");
+	ft_putstr("     ’die’ milliseconds after starting his last meal\n");
+	ft_putstr("     or the beginning of the simulation, it dies.\n\n");
+	ft_putstr("eat: is in milliseconds and is the time ");
+	ft_putstr("it takes for a philosopher to eat.\n\n");
+	ft_putstr("sleep: s in milliseconds and is the time ");
+	ft_putstr("the philosopher will spend sleeping.\n\n");
+	ft_putstr("n_eat: argument is optional, ");
+	ft_putstr("if all philosophers eat at least ’n_eat’ ");
+	ft_putstr("the simulation will stop.\n");
+	return (1);
 }
 
-void safe_sleep_thread(unsigned long time, char **error) {
-	if (usleep(time) == -1) {
+void	safe_sleep_thread(unsigned long time, char **error)
+{
+	if (usleep(time) == -1)
+	{
 		*error = "sleep error\n";
 		pthread_exit(NULL);
 	}

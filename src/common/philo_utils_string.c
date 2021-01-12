@@ -1,10 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo_utils_string.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nalexand <nalexand@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/12 21:59:09 by nalexand          #+#    #+#             */
+/*   Updated: 2021/01/12 21:59:31 by nalexand         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo_utils.h"
 
-int ft_strlen(const char *string) {
-	register int i;
+int		ft_strlen(const char *string)
+{
+	register int	i;
 
 	i = 0;
-	while (string[i]) {
+	while (string[i])
+	{
 		if (string[i] &&
 			string[i + 1] &&
 			string[i + 2] &&
@@ -17,9 +31,32 @@ int ft_strlen(const char *string) {
 		else
 			i++;
 	}
-	return i;
+	return (i);
 }
 
-void ft_putstr_fd(const char *str, int fd) {
+void	ft_putstr_fd(const char *str, int fd)
+{
 	write(fd, str, ft_strlen(str));
+}
+
+void	ft_putstr(const char *str)
+{
+	write(1, str, ft_strlen(str));
+}
+
+char	*get_file_name(char *str)
+{
+	register int	i;
+
+	if (str == NULL)
+		return (NULL);
+	i = ft_strlen(str);
+	if (i == 0)
+		return (str);
+	while (i-- >= 0)
+	{
+		if (str[i] == '/')
+			return (str + i + 1);
+	}
+	return (str);
 }

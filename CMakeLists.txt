@@ -74,3 +74,10 @@ add_executable(test_ft_atoi
         includes/philo_utils.h)
 
 target_include_directories(test_ft_atoi PUBLIC includes)
+
+add_executable(test_strings
+        test/test_strings.c
+        src/common/philo_utils_string.c
+        includes/philo_utils.h)
+
+target_include_directories(test_strings PUBLIC includes)

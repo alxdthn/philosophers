@@ -1,5 +1,17 @@
-#ifndef PHILOSOPHERS_PHILO_PRINT_H
-# define PHILOSOPHERS_PHILO_PRINT_H
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo_print.h                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nalexand <nalexand@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/12 22:51:52 by nalexand          #+#    #+#             */
+/*   Updated: 2021/01/12 22:51:52 by nalexand         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef PHILO_PRINT_H
+# define PHILO_PRINT_H
 
 # include <stdlib.h>
 # include <unistd.h>

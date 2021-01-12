@@ -1,32 +1,50 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo_monitor.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nalexand <nalexand@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/12 20:24:35 by nalexand          #+#    #+#             */
+/*   Updated: 2021/01/12 22:10:41 by nalexand         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo_utils.h"
 #include "philo_print.h"
 
-bool check_is_died(t_philo_attrs *philo_attrs, t_program_attrs *program_attrs) {
+bool	is_died(t_philo_attrs *philo, t_program_attrs *program)
+{
 	unsigned long current_time;
 
-	if (philo_attrs->eat_count == program_attrs->number_of_times_each_philosopher_must_eat)
-		return true;
-
+	if (philo->eat_count == program->eat_number)
+		return (true);
 	current_time = get_current_time_stamp();
-	return current_time - philo_attrs->last_meal >= (program_attrs->time_to_die);
+	return (current_time - philo->last_meal >= (program->time_to_die));
 }
 
-int monitor_process(t_program_attrs *program) {
-	t_philo_attrs *philosopher;
-	register int  i;
+int		monitor_process(t_program_attrs *program)
+{
+	t_philo_attrs	*philosopher;
+	register int	i;
 
-	while (true) {
+	while (true)
+	{
 		i = 0;
-		while (i < program->number_of_philosophers) {
+		while (i < program->n_philo)
+		{
 			philosopher = program->philo_attrs[i++];
-			if (check_is_died(philosopher, program)) {
-				print_status(get_time_offset(program->start_time), philosopher->id, " died\n");
-				return EXIT_SUCCESS;
+			if (is_died(philosopher, program))
+			{
+				print_status(
+						get_time_offset(program->start_time),
+						philosopher->id, " died\n");
+				return (EXIT_SUCCESS);
 			}
 		}
 		if (program->error)
-			return error(program->error);
+			return (error(program->error));
 		if (usleep(program->monitor_frequency) == -1)
-			return error("sleep error\n");
+			return (error("sleep error\n"));
 	}
 }
