@@ -1,4 +1,4 @@
-#include "../../includes/philo_utils.h"
+#include "philo_utils.h"
 
 unsigned long get_current_time_stamp() {
 	struct timeval time;

@@ -1,5 +1,5 @@
-#include "../../includes/philo_three.h"
-#include "../../includes/philo_print.h"
+#include "philo_three.h"
+#include "philo_print.h"
 
 int eating(t_philo_three *program) {
 	t_program_attrs *program_attrs;

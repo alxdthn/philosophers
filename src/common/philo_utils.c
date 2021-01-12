@@ -1,4 +1,4 @@
-#include "../../includes/philo_utils.h"
+#include "philo_utils.h"
 
 int error(const char *message) {
 	ft_putstr_fd(message, 2);

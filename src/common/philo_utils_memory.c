@@ -1,27 +1,4 @@
-#include "../../includes/philo_utils.h"
-
-void ft_bzero(void *dst, size_t size) {
-	unsigned char *dst_mem;
-	register int  i;
-
-	dst_mem = dst;
-	i       = 0;
-	while (i < size) {
-		dst_mem[i] = '\0';
-		if (i + 8 < size) {
-			dst_mem[i + 1] = '\0';
-			dst_mem[i + 2] = '\0';
-			dst_mem[i + 3] = '\0';
-			dst_mem[i + 4] = '\0';
-			dst_mem[i + 5] = '\0';
-			dst_mem[i + 6] = '\0';
-			dst_mem[i + 7] = '\0';
-			i += 8;
-		} else {
-			i++;
-		}
-	}
-}
+#include "philo_utils.h"
 
 void ft_memcpy(void *dst, void *src, size_t size) {
 	register size_t i;

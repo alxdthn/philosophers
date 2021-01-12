@@ -1,9 +1,4 @@
-#include "../../includes/philo_three.h"
-
-sem_t *create_semaphore(unsigned long init_value) {
-	sem_unlink(FORKS_SEMAPHORE_NAME);
-	return sem_open(FORKS_SEMAPHORE_NAME, O_CREAT, 0644, init_value);
-}
+#include "philo_three.h"
 
 bool create_philosophers(t_philo_three *program) {
 	register int  i;
@@ -19,7 +14,7 @@ bool create_philosophers(t_philo_three *program) {
 		philo_attrs = malloc(sizeof(t_philo_attrs));
 		if (!philo_attrs)
 			return false;
-		ft_bzero(philo_attrs, sizeof(t_philo_attrs));
+		memset(philo_attrs, '\0', sizeof(t_philo_attrs));
 		philo_attrs->id = (int) i + 1;
 		attrs_array[i++] = philo_attrs;
 	}

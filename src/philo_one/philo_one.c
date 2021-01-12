@@ -1,8 +1,5 @@
-#include "../../includes/philo_one.h"
-#include "../../includes/philo_print.h"
-
-#pragma clang diagnostic push
-#pragma ide diagnostic ignored "EndlessLoop"
+#include "philo_one.h"
+#include "philo_print.h"
 
 static void *philosopher_process(void *arg) {
 	t_philosopher_process_argument *argument;
@@ -18,7 +15,7 @@ static void *philosopher_process(void *arg) {
 		pthread_exit(NULL);
 	if (philosopher->attrs.id % 2 == 0)
 		safe_sleep_thread(EVEN_PHILO_THREAD_START_DELAY, &program->attrs.error);
-	while (true) {
+	while (!program->attrs.error) {
 		take_forks(philosopher, program);
 		eating(philosopher, program);
 		drop_forks(philosopher, program);
@@ -56,7 +53,7 @@ static bool run_philosophers(t_philo_one *program) {
 int main(int ac, char **av) {
 	t_philo_one   program;
 
-	ft_bzero(&program, sizeof(t_philo_one));
+	memset(&program, '\0', sizeof(t_philo_one));
 	program.attrs.monitor_frequency = MONITOR_FREQUENCY_USEC;
 
 	if (parse_args(ac, av, &program.attrs))

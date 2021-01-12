@@ -1,5 +1,5 @@
-#include "../../includes/philo_utils.h"
-#include "../../includes/philo_print.h"
+#include "philo_utils.h"
+#include "philo_print.h"
 
 bool check_is_died(t_philo_attrs *philo_attrs, t_program_attrs *program_attrs) {
 	unsigned long current_time;

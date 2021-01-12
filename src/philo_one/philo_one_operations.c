@@ -1,5 +1,5 @@
-#include "../../includes/philo_one.h"
-#include "../../includes/philo_print.h"
+#include "philo_one.h"
+#include "philo_print.h"
 
 void eating(t_philosopher *philosopher, t_philo_one *program) {
 	philosopher->attrs.eat_count++;

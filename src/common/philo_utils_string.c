@@ -1,4 +1,4 @@
-#include "../../includes/philo_utils.h"
+#include "philo_utils.h"
 
 int ft_strlen(const char *string) {
 	register int i;

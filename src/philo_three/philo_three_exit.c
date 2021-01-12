@@ -1,4 +1,4 @@
-#include "../../includes/philo_three.h"
+#include "philo_three.h"
 
 int exit_program(t_philo_three *program, int exit_code) {
 	register int	i;

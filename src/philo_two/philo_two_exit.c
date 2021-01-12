@@ -1,4 +1,4 @@
-#include "../../includes/philo_two.h"
+#include "philo_two.h"
 
 int exit_program(sem_t *sem, int exit_code) {
 	if (sem) {

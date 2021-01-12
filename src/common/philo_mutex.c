@@ -1,4 +1,4 @@
-#include "../../includes/philo_utils.h"
+#include "philo_utils.h"
 
 void safe_lock_thread_mutex(pthread_mutex_t *mutex, char **error) {
 	if (pthread_mutex_lock(mutex)) {

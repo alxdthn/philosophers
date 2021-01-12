@@ -1,8 +1,4 @@
-#include "../../includes/philo_two.h"
-
-sem_t *create_semaphore(unsigned long init_value) {
-	return sem_open(FORKS_SEMAPHORE_NAME, O_CREAT, 0644, init_value);
-}
+#include "philo_two.h"
 
 bool create_philosophers(t_philo_two *program) {
 	register int  i;
@@ -17,7 +13,7 @@ bool create_philosophers(t_philo_two *program) {
 	if (!philo_attrs)
 		return false;
 
-	ft_bzero(result, sizeof(t_philosopher) * program->attrs.number_of_philosophers);
+	memset(result, '\0', sizeof(t_philosopher) * program->attrs.number_of_philosophers);
 
 	i = 0;
 	while (i < program->attrs.number_of_philosophers) {

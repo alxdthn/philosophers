@@ -1,4 +1,4 @@
-#include "../../includes/philo_utils.h"
+#include "philo_utils.h"
 
 static int get_and_validate_value(char *arg, int *dst, int ratio) {
 	register int i;
@@ -25,7 +25,7 @@ int parse_args(int ac, char **av, t_program_attrs *result) {
 
 	if (get_and_validate_value(av[1], &result->number_of_philosophers, 1))
 		return error("bad number_of_philosophers\n");
-	if (get_and_validate_value(av[2], &result->time_to_die, 1))
+	if (get_and_validate_value(av[2], (int *)&result->time_to_die, 1))
 		return error("bad time_to_die\n");
 	if (get_and_validate_value(av[3], &result->time_to_eat, MICRO_SEC_IN_MILLIS))
 		return error("bad time_to_eat\n");

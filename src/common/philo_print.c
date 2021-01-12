@@ -1,5 +1,5 @@
-#include "../../includes/philo_print.h"
-#include "../../includes/philo_utils.h"
+#include "philo_print.h"
+#include "philo_utils.h"
 
 void print_status(unsigned long time, int philosopher_id, char *status) {
 	int  full_len;

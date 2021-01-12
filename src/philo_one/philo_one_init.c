@@ -1,4 +1,4 @@
-#include "../../includes/philo_one.h"
+#include "philo_one.h"
 
 bool create_philosophers(t_philo_one *program) {
 	register int  i;
@@ -13,7 +13,7 @@ bool create_philosophers(t_philo_one *program) {
 	if (!philo_attrs)
 		return false;
 
-	ft_bzero(result, sizeof(t_philosopher) * program->attrs.number_of_philosophers);
+	memset(result, '\0', sizeof(t_philosopher) * program->attrs.number_of_philosophers);
 
 	i = 0;
 	while (i < program->attrs.number_of_philosophers) {

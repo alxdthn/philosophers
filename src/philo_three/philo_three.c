@@ -1,5 +1,5 @@
-#include "../../includes/philo_three.h"
-#include "../../includes/philo_print.h"
+#include "philo_three.h"
+#include "philo_print.h"
 
 static void *monitor_thread(void *arg) {
 	t_philo_three *program;
@@ -84,7 +84,7 @@ static int resolve_fork(t_philo_three *program) {
 int main(int ac, char **av) {
 	t_philo_three program;
 
-	ft_bzero(&program, sizeof(t_philo_three));
+	memset(&program, '\0', sizeof(t_philo_three));
 	program.program_attrs.monitor_frequency = MONITOR_FREQUENCY_USEC;
 
 	if (parse_args(ac, av, &program.program_attrs))

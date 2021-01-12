@@ -4,12 +4,11 @@ PHILO_ONE = philo_one
 PHILO_TWO = philo_two
 PHILO_THREE = philo_three
 
-CFLAGS =
+CFLAGS = -Wall -Werror -Wextra
 
 OBJD = obj/
 
-PHILO_ONE_INCLUDES = -I philo_one_src/includes \
-                     -I common/includes
+INCLUDES = includes/
 
 COMMON_SRC =		src/common/philo_monitor.c \
             		src/common/philo_mutex.c \
@@ -43,26 +42,26 @@ PHILO_THREE_OBJ =	$(addprefix $(OBJD), $(patsubst %.c, %.o, $(PHILO_THREE_SRC)))
 all: $(PHILO_ONE) $(PHILO_TWO) $(PHILO_THREE)
 
 $(PHILO_ONE): $(PHILO_ONE_OBJ) $(COMMON_OBJ)
-	@gcc $(CFLAGS) -o $@ $^ $(PHILO_ONE_INCLUDES)
+	@gcc $(CFLAGS) -o $@ $^ -I $(INCLUDES)
 	@printf "\x1b[32mCompile executable: "
 	@printf $@
 	@printf "\x1b[0m\n"
 
 $(PHILO_TWO): $(PHILO_TWO_OBJ) $(COMMON_OBJ)
-	@gcc $(CFLAGS) -o $@ $^ $(PHILO_ONE_INCLUDES)
+	@gcc $(CFLAGS) -o $@ $^ -I $(INCLUDES)
 	@printf "\x1b[32mCompile executable: "
 	@printf $@
 	@printf "\x1b[0m\n"
 
 $(PHILO_THREE): $(PHILO_THREE_OBJ) $(COMMON_OBJ)
-	@gcc $(CFLAGS) -o $@ $^ $(PHILO_ONE_INCLUDES)
+	@gcc $(CFLAGS) -o $@ $^ -I $(INCLUDES)
 	@printf "\x1b[32mCompile executable: "
 	@printf $@
 	@printf "\x1b[0m\n"
 
 $(OBJD)%.o: %.c
 	@mkdir -p $(dir $@)
-	@gcc -o $@ -c $< $(PHILO_ONE_INCLUDES)
+	@gcc $(CFLAGS) -o $@ -c $< -I $(INCLUDES)
 	@printf "\x1b[33mCompile object: "
 	@printf $(notdir $@)
 	@printf "\x1b[0m\n"
