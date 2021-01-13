@@ -6,7 +6,7 @@
 /*   By: nalexand <nalexand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 22:57:59 by nalexand          #+#    #+#             */
-/*   Updated: 2021/01/12 22:59:49 by nalexand         ###   ########.fr       */
+/*   Updated: 2021/01/13 20:02:26 by nalexand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef struct		s_program_attrs {
 	int				time_to_sleep;
 	int				eat_number;
 	int				monitor_frequency;
+	int				started_philos;
 	char			*error;
 	unsigned long	time_to_die;
 	unsigned long	start_time;

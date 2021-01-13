@@ -6,7 +6,7 @@
 /*   By: nalexand <nalexand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 21:59:51 by nalexand          #+#    #+#             */
-/*   Updated: 2021/01/12 22:59:30 by nalexand         ###   ########.fr       */
+/*   Updated: 2021/01/13 19:56:09 by nalexand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,15 @@ static void	*philo_process(void *arg)
 	argument = arg;
 	program = argument->program;
 	philosopher = argument->philosopher;
+	philosopher->attrs.last_meal = program->attrs.start_time;
 	free(argument);
-	if (pthread_detach(philosopher->thread))
+	if (pthread_detach(philosopher->thread)) {
+		program->attrs.error = "pthread detach\n";
 		pthread_exit(NULL);
-	if (philosopher->attrs.id % 2 == 0)
-		safe_sleep_thread(EVEN_PHILO_THREAD_START_DELAY, &program->attrs.error);
+	}
+	program->attrs.started_philos++;
+	//if (philosopher->attrs.id % 2 == 0)
+	//	safe_sleep_thread(EVEN_PHILO_THREAD_START_DELAY, &program->attrs.error);
 	while (!program->attrs.error)
 	{
 		take_forks(philosopher, program);
@@ -49,7 +53,6 @@ static bool	run_philosophers(t_philo_one *program)
 	while (i < program->attrs.n_philo)
 	{
 		philosopher = &program->philosophers[i++];
-		philosopher->attrs.last_meal = program->attrs.start_time;
 		argument = malloc(sizeof(t_philo_process_argument));
 		if (!argument)
 			return (false);

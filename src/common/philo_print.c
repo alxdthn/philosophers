@@ -6,7 +6,7 @@
 /*   By: nalexand <nalexand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 20:54:35 by nalexand          #+#    #+#             */
-/*   Updated: 2021/01/12 21:15:20 by nalexand         ###   ########.fr       */
+/*   Updated: 2021/01/13 19:50:15 by nalexand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ void		print_status(unsigned long time, int philosopher_id, char *status)
 	int		lens[3];
 	char	*strings[3];
 
+	printf("%ldms %d%s", time, philosopher_id, status);
+	return;
 	if (!get_numbers(time, philosopher_id, strings))
 		return ;
 	strings[STATUS] = status;

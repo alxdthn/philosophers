@@ -14,8 +14,6 @@
 
 int		ft_numlen(unsigned int x)
 {
-	if (x >= 10000000000)
-		return (11);
 	if (x >= 1000000000)
 		return (10);
 	if (x >= 100000000)

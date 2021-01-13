@@ -6,7 +6,7 @@
 /*   By: nalexand <nalexand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 20:24:35 by nalexand          #+#    #+#             */
-/*   Updated: 2021/01/12 22:59:30 by nalexand         ###   ########.fr       */
+/*   Updated: 2021/01/13 19:57:01 by nalexand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,12 @@ int		monitor_process(t_program_attrs *program)
 	t_philo_attrs	*philosopher;
 	register int	i;
 
+	while (program->started_philos != program->n_philo)
+	{
+
+	}
+
+	printf("Start monitor\n");
 	while (true)
 	{
 		i = 0;
