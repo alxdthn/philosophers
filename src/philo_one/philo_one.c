@@ -6,7 +6,7 @@
 /*   By: nalexand <nalexand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 21:59:51 by nalexand          #+#    #+#             */
-/*   Updated: 2021/01/13 19:56:09 by nalexand         ###   ########.fr       */
+/*   Updated: 2021/01/13 22:09:15 by nalexand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,12 @@ static void	*philo_process(void *arg)
 		pthread_exit(NULL);
 	}
 	program->attrs.started_philos++;
-	//if (philosopher->attrs.id % 2 == 0)
-	//	safe_sleep_thread(EVEN_PHILO_THREAD_START_DELAY, &program->attrs.error);
+	if (philosopher->attrs.id % 2 == 0)
+		safe_sleep_thread(EVEN_PHILO_THREAD_START_DELAY, &program->attrs.error);
 	while (!program->attrs.error)
 	{
-		take_forks(philosopher, program);
+		if (!take_forks(philosopher, program))
+			continue ;
 		eating(philosopher, program);
 		drop_forks(philosopher, program);
 		sleeping(philosopher, program);

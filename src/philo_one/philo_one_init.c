@@ -51,16 +51,16 @@ bool		create_philosophers(t_philo_one *program)
 
 bool		create_forks(t_philo_one *program)
 {
-	pthread_mutex_t	*result;
+	t_fork_mutex 	*result;
 	register int	i;
 
-	result = malloc(sizeof(pthread_mutex_t) * program->attrs.n_philo);
+	result = malloc(sizeof(t_fork_mutex) * program->attrs.n_philo);
 	if (!result)
 		return (false);
 	i = 0;
 	while (i < program->attrs.n_philo)
 	{
-		if (pthread_mutex_init(&result[i++], NULL))
+		if (pthread_mutex_init(&result[i++].mutex, NULL))
 			return (false);
 	}
 	program->forks = result;
