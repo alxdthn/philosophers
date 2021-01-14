@@ -15,16 +15,14 @@
 
 int		eating(t_philo_three *program)
 {
-	t_program_attrs	*program_attrs;
+	t_attrs			*program_attrs;
 	t_philo_attrs	*philo_attrs;
-	unsigned long	time_offset;
 
 	program_attrs = &program->prog_attrs;
 	philo_attrs = program->philosopher_attrs;
 	philo_attrs->eat_count++;
 	philo_attrs->last_meal = get_current_time_stamp();
-	time_offset = get_time_offset(program_attrs->start_time);
-	print_status(time_offset, philo_attrs->id, " is eating\n");
+	print_status(program_attrs, philo_attrs->id, EAT);
 	if (usleep(program_attrs->time_to_eat) == -1)
 		return (error("error sleep\n"));
 	return (0);
@@ -32,14 +30,12 @@ int		eating(t_philo_three *program)
 
 int		sleeping(t_philo_three *program)
 {
-	t_program_attrs	*program_attrs;
+	t_attrs			*program_attrs;
 	t_philo_attrs	*philo_attrs;
-	unsigned long	time_offset;
 
 	program_attrs = &program->prog_attrs;
 	philo_attrs = program->philosopher_attrs;
-	time_offset = get_time_offset(program_attrs->start_time);
-	print_status(time_offset, philo_attrs->id, " is sleeping\n");
+	print_status(program_attrs, philo_attrs->id, SLEEP);
 	if (usleep(program_attrs->time_to_sleep) == -1)
 		return (error("error sleep\n"));
 	return (0);
@@ -47,32 +43,27 @@ int		sleeping(t_philo_three *program)
 
 void	thinking(t_philo_three *program)
 {
-	t_program_attrs	*program_attrs;
+	t_attrs			*program_attrs;
 	t_philo_attrs	*philo_attrs;
-	unsigned long	time_offset;
 
 	program_attrs = &program->prog_attrs;
 	philo_attrs = program->philosopher_attrs;
-	time_offset = get_time_offset(program_attrs->start_time);
-	print_status(time_offset, philo_attrs->id, " is thinking\n");
+	print_status(program_attrs, philo_attrs->id, THINK);
 }
 
 int		take_forks(t_philo_three *program)
 {
-	t_program_attrs	*program_attrs;
+	t_attrs			*program_attrs;
 	t_philo_attrs	*philo_attrs;
-	unsigned long	time_offset;
 
 	program_attrs = &program->prog_attrs;
 	philo_attrs = program->philosopher_attrs;
 	if (sem_wait(program->forks_sem) == -1)
 		return (error("error sem wait\n"));
-	time_offset = get_time_offset(program_attrs->start_time);
-	print_status(time_offset, philo_attrs->id, " has taken a fork\n");
+	print_status(program_attrs, philo_attrs->id, FORK);
 	if (sem_wait(program->forks_sem) == -1)
 		return (error("error sem wait\n"));
-	time_offset = get_time_offset(program_attrs->start_time);
-	print_status(time_offset, philo_attrs->id, " has taken a fork\n");
+	print_status(program_attrs, philo_attrs->id, FORK);
 	return (0);
 }
 

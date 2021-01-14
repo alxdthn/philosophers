@@ -6,12 +6,11 @@
 /*   By: nalexand <nalexand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 21:59:51 by nalexand          #+#    #+#             */
-/*   Updated: 2021/01/13 22:09:15 by nalexand         ###   ########.fr       */
+/*   Updated: 2021/01/14 18:30:22 by nalexand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_one.h"
-#include "philo_print.h"
 
 static void	*philo_process(void *arg)
 {
@@ -28,13 +27,9 @@ static void	*philo_process(void *arg)
 		program->attrs.error = "pthread detach\n";
 		pthread_exit(NULL);
 	}
-	program->attrs.started_philos++;
-	if (philosopher->attrs.id % 2 == 0)
-		safe_sleep_thread(EVEN_PHILO_THREAD_START_DELAY, &program->attrs.error);
 	while (!program->attrs.error)
 	{
-		if (!take_forks(philosopher, program))
-			continue ;
+		take_forks(philosopher, program);
 		eating(philosopher, program);
 		drop_forks(philosopher, program);
 		sleeping(philosopher, program);
@@ -60,6 +55,8 @@ static bool	run_philosophers(t_philo_one *program)
 		argument->program = program;
 		argument->philosopher = philosopher;
 		if (pthread_create(&philosopher->thread, NULL, philo_process, argument))
+			return (false);
+		if (usleep(EVEN_PHILO_THREAD_START_DELAY) == -1)
 			return (false);
 	}
 	return (true);

@@ -6,7 +6,7 @@
 /*   By: nalexand <nalexand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 21:38:47 by nalexand          #+#    #+#             */
-/*   Updated: 2021/01/12 22:59:30 by nalexand         ###   ########.fr       */
+/*   Updated: 2021/01/14 17:54:49 by nalexand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,20 @@ int		usage(char *file_name)
 
 void	safe_sleep_thread(unsigned long time, char **error)
 {
-	if (usleep(time) == -1)
+	unsigned long	sleep_start;
+	unsigned long	current_time;
+	unsigned long	time_ms;
+
+	time_ms = time / 1000;
+	sleep_start = get_current_time_stamp();
+	current_time = sleep_start;
+	while (time_ms > current_time - sleep_start)
 	{
-		*error = "sleep error\n";
-		pthread_exit(NULL);
+		current_time = get_current_time_stamp();
 	}
+	//if (usleep(time) == -1)
+	//{
+	//	*error = "sleep error\n";
+	//	pthread_exit(NULL);
+	//}
 }

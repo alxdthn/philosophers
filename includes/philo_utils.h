@@ -6,7 +6,7 @@
 /*   By: nalexand <nalexand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 22:57:59 by nalexand          #+#    #+#             */
-/*   Updated: 2021/01/13 20:02:26 by nalexand         ###   ########.fr       */
+/*   Updated: 2021/01/14 18:30:14 by nalexand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,14 @@
 # define EVEN_PHILO_THREAD_START_DELAY 42
 # define FORKS_SEM_NAME "/forks"
 # define FORKS_SEM_FLAGS 0644
+# define TIME 0
+# define ID 1
+# define STATUS 2
+# define EAT " is eating\n"
+# define SLEEP " is sleeping\n"
+# define THINK " is thinking\n"
+# define FORK " has taken a fork\n"
+# define DIE " died\n"
 
 typedef struct		s_philo_attrs {
 	int				id;
@@ -35,20 +43,19 @@ typedef struct		s_philo_attrs {
 	unsigned long	last_meal;
 }					t_philo_attrs;
 
-typedef struct		s_program_attrs {
+typedef struct		s_attrs {
 	int				n_philo;
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				eat_number;
 	int				monitor_frequency;
-	int				started_philos;
 	char			*error;
 	unsigned long	time_to_die;
 	unsigned long	start_time;
 	t_philo_attrs	**philo_attrs;
-}					t_program_attrs;
+}					t_attrs;
 
-int					parse_args(int ac, char **av, t_program_attrs *result);
+int					parse_args(int ac, char **av, t_attrs *result);
 
 int					ft_numlen(unsigned int x);
 
@@ -66,6 +73,8 @@ void				ft_putstr_fd(const char *str, int fd);
 
 int					ft_atoi(const char *str);
 
+char				*ft_ultoa(unsigned long number);
+
 int					error(const char *message);
 
 int					usage(char *file_name);
@@ -82,12 +91,14 @@ void				safe_sem_post_thread(sem_t *sem, char **error);
 
 sem_t				*create_semaphore(unsigned long init_value);
 
-bool				is_died(t_philo_attrs *philo, t_program_attrs *program);
+bool				is_died(t_philo_attrs *philo, t_attrs *program);
 
-int					monitor_process(t_program_attrs *program);
+int					monitor_process(t_attrs *program);
 
 unsigned long		get_current_time_stamp(void);
 
 unsigned long		get_time_offset(unsigned long current_time);
+
+void				print_status(t_attrs *attrs, int id, char *status);
 
 #endif

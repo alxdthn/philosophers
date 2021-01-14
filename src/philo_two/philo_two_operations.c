@@ -11,46 +11,32 @@
 /* ************************************************************************** */
 
 #include "philo_two.h"
-#include "philo_print.h"
 
-void	eating(t_philo *philosopher, t_philo_two *program)
+void	eating(t_philo *philo, t_philo_two *program)
 {
-	unsigned long	time_offset;
-
-	philosopher->attrs.eat_count++;
-	philosopher->attrs.last_meal = get_current_time_stamp();
-	time_offset = get_time_offset(program->attrs.start_time);
-	print_status(time_offset, philosopher->attrs.id, " is eating\n");
+	philo->attrs.eat_count++;
+	philo->attrs.last_meal = get_current_time_stamp();
+	print_status(&program->attrs, philo->attrs.id, EAT);
 	safe_sleep_thread(program->attrs.time_to_eat, &program->attrs.error);
 }
 
-void	sleeping(t_philo *philosopher, t_philo_two *program)
+void	sleeping(t_philo *philo, t_philo_two *program)
 {
-	unsigned long	time_offset;
-
-	time_offset = get_time_offset(program->attrs.start_time);
-	print_status(time_offset, philosopher->attrs.id, " is sleeping\n");
+	print_status(&program->attrs, philo->attrs.id, SLEEP);
 	safe_sleep_thread(program->attrs.time_to_sleep, &program->attrs.error);
 }
 
-void	thinking(t_philo *philosopher, t_philo_two *program)
+void	thinking(t_philo *philo, t_philo_two *program)
 {
-	unsigned long	time_offset;
-
-	time_offset = get_time_offset(program->attrs.start_time);
-	print_status(time_offset, philosopher->attrs.id, " is thinking\n");
+	print_status(&program->attrs, philo->attrs.id, THINK);
 }
 
-void	take_forks(t_philo *philosopher, t_philo_two *program)
+void	take_forks(t_philo *philo, t_philo_two *program)
 {
-	unsigned long	time_offset;
-
 	safe_sem_wait_thread(program->forks_sem, &program->attrs.error);
-	time_offset = get_time_offset(program->attrs.start_time);
-	print_status(time_offset, philosopher->attrs.id, " has taken a fork\n");
+	print_status(&program->attrs, philo->attrs.id, FORK);
 	safe_sem_wait_thread(program->forks_sem, &program->attrs.error);
-	time_offset = get_time_offset(program->attrs.start_time);
-	print_status(time_offset, philosopher->attrs.id, " has taken a fork\n");
+	print_status(&program->attrs, philo->attrs.id, FORK);
 }
 
 void	drop_forks(t_philo_two *program)

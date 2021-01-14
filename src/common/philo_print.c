@@ -6,11 +6,10 @@
 /*   By: nalexand <nalexand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 20:54:35 by nalexand          #+#    #+#             */
-/*   Updated: 2021/01/13 19:50:15 by nalexand         ###   ########.fr       */
+/*   Updated: 2021/01/14 18:30:14 by nalexand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo_print.h"
 #include "philo_utils.h"
 
 static bool	get_numbers(unsigned long time, int philosopher_id, char **strings)
@@ -56,14 +55,14 @@ static void	write_line(char **strings, int *lens)
 	free(line_start);
 }
 
-void		print_status(unsigned long time, int philosopher_id, char *status)
+void		print_status(t_attrs *attrs, int id, char *status)
 {
-	int		lens[3];
-	char	*strings[3];
+	int				lens[3];
+	char			*strings[3];
+	unsigned long	time_offset;
 
-	printf("%ldms %d%s", time, philosopher_id, status);
-	return;
-	if (!get_numbers(time, philosopher_id, strings))
+	time_offset = get_time_offset(attrs->start_time);
+	if (!get_numbers(time_offset, id, strings))
 		return ;
 	strings[STATUS] = status;
 	get_lens(strings, lens);

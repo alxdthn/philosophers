@@ -22,7 +22,7 @@ typedef struct		s_philo {
 
 typedef struct		s_philo_two {
 	sem_t			*forks_sem;
-	t_program_attrs	attrs;
+	t_attrs	attrs;
 	t_philo			*philosophers;
 }					t_philo_two;
 
@@ -35,13 +35,13 @@ bool				create_philosophers(t_philo_two *program);
 
 int					exit_program(sem_t *sem, int exit_code);
 
-void				eating(t_philo *philosopher, t_philo_two *program);
+void				eating(t_philo *philo, t_philo_two *program);
 
-void				sleeping(t_philo *philosopher, t_philo_two *program);
+void				sleeping(t_philo *philo, t_philo_two *program);
 
-void				thinking(t_philo *philosopher, t_philo_two *program);
+void				thinking(t_philo *philo, t_philo_two *program);
 
-void				take_forks(t_philo *philosopher, t_philo_two *program);
+void				take_forks(t_philo *philo, t_philo_two *program);
 
 void				drop_forks(t_philo_two *program);
 

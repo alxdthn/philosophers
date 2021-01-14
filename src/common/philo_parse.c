@@ -31,7 +31,7 @@ static int	get_and_validate_value(char *arg, int *dst, int ratio)
 	return (0);
 }
 
-int			parse_args(int ac, char **av, t_program_attrs *result)
+int			parse_args(int ac, char **av, t_attrs *result)
 {
 	if (ac < 5 || ac > 6)
 		return (usage(get_file_name(av[0])));

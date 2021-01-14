@@ -17,7 +17,6 @@ add_executable(philo_one
         src/common/philo_utils_memory.c
         src/common/philo_utils_string.c
         src/common/philo_utils_number.c
-        includes/philo_print.h
         includes/philo_utils.h)
 
 target_include_directories(philo_one PUBLIC includes)
@@ -37,7 +36,6 @@ add_executable(philo_two
         src/common/philo_utils_memory.c
         src/common/philo_utils_string.c
         src/common/philo_utils_number.c
-        includes/philo_print.h
         includes/philo_utils.h)
 
 target_include_directories(philo_two PUBLIC includes)

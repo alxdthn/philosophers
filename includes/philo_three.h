@@ -21,7 +21,7 @@ typedef struct		s_philo_three {
 	pid_t			*children_pid;
 	sem_t			*forks_sem;
 	t_philo_attrs	*philosopher_attrs;
-	t_program_attrs	prog_attrs;
+	t_attrs			prog_attrs;
 	pthread_t		monitor;
 }					t_philo_three;
 
