@@ -29,9 +29,9 @@ bool				create_philosophers(t_philo_three *program);
 
 int					exit_program(t_philo_three *program, int exit_code);
 
-int					eating(t_philo_three *program);
+void 				eating(t_philo_three *program);
 
-int					sleeping(t_philo_three *program);
+void 				sleeping(t_philo_three *program);
 
 int					take_forks(t_philo_three *program);
 

@@ -24,8 +24,6 @@ static void	*philo_process(void *arg)
 	free(argument);
 	if (pthread_detach(philosopher->thread))
 		pthread_exit(NULL);
-	if (philosopher->attrs.id % 2 == 0)
-		safe_sleep_thread(EVEN_PHILO_THREAD_START_DELAY, &program->attrs.error);
 	while (!program->attrs.error)
 	{
 		take_forks(philosopher, program);
@@ -56,6 +54,7 @@ static bool	run_philosophers(t_philo_two *program)
 		argument->philosopher = philosopher;
 		if (pthread_create(&philosopher->thread, NULL, philo_process, argument))
 			return (false);
+		ft_usleep(EVEN_PHILO_THREAD_START_DELAY);
 	}
 	return (true);
 }
@@ -66,7 +65,6 @@ int			main(int ac, char **av)
 	sem_t		*sem;
 
 	memset(&program, '\0', sizeof(t_philo_two));
-	program.attrs.monitor_frequency = MONITOR_FREQUENCY_USEC;
 	if (parse_args(ac, av, &program.attrs))
 		return (exit_program(NULL, EXIT_SUCCESS));
 	sem = create_semaphore(program.attrs.n_philo);

@@ -11,13 +11,11 @@
 /* ************************************************************************** */
 
 #include "philo_three.h"
-#include "philo_print.h"
 
 static void	*monitor_thread(void *arg)
 {
 	t_philo_three	*program;
 	t_philo_attrs	*philosopher;
-	unsigned long	time_offset;
 
 	program = arg;
 	philosopher = program->philosopher_attrs;
@@ -25,34 +23,24 @@ static void	*monitor_thread(void *arg)
 	{
 		if (is_died(philosopher, &program->prog_attrs))
 		{
-			time_offset = get_time_offset(program->prog_attrs.start_time);
-			print_status(time_offset, philosopher->id, " died\n");
+			print_status(&program->prog_attrs, philosopher->id, DIE);
 			exit(SIGCHLD);
 		}
 		if (program->prog_attrs.error)
 			exit(error(program->prog_attrs.error));
-		if (usleep(program->prog_attrs.monitor_frequency) == -1)
-			exit(error("sleep error\n"));
 	}
 }
 
 static int	philosopher_process(t_philo_three *program)
 {
-	t_philo_attrs	*philo_attrs;
-
-	philo_attrs = program->philosopher_attrs;
-	if (philo_attrs->id % 2 == 0)
-	{
-		if (usleep(EVEN_PHILO_THREAD_START_DELAY) == -1)
-			return (error("error sleep\n"));
-	}
 	while (true)
 	{
-		if (take_forks(program) ||
-			eating(program) ||
-			drop_forks(program) ||
-			sleeping(program))
+		if (take_forks(program))
 			return (EXIT_FAILURE);
+		eating(program);
+		if (drop_forks(program))
+			return (EXIT_FAILURE);
+		sleeping(program);
 		thinking(program);
 	}
 }
@@ -79,7 +67,10 @@ static bool	fork_philosophers(t_philo_three *program)
 			return (true);
 		}
 		else if (pid > 0)
+		{
 			program->children_pid[i++] = pid;
+			ft_usleep(EVEN_PHILO_THREAD_START_DELAY);
+		}
 		else
 			return (false);
 	}
@@ -110,7 +101,6 @@ int			main(int ac, char **av)
 	t_philo_three program;
 
 	memset(&program, '\0', sizeof(t_philo_three));
-	program.prog_attrs.monitor_frequency = MONITOR_FREQUENCY_USEC;
 	if (parse_args(ac, av, &program.prog_attrs))
 		return (exit_program(NULL, EXIT_SUCCESS));
 	program.forks_sem = create_semaphore(program.prog_attrs.n_philo);

@@ -17,13 +17,13 @@ void	eating(t_philo *philo, t_philo_two *program)
 	philo->attrs.eat_count++;
 	philo->attrs.last_meal = get_current_time_stamp();
 	print_status(&program->attrs, philo->attrs.id, EAT);
-	safe_sleep_thread(program->attrs.time_to_eat, &program->attrs.error);
+	ft_usleep(program->attrs.time_to_eat);
 }
 
 void	sleeping(t_philo *philo, t_philo_two *program)
 {
 	print_status(&program->attrs, philo->attrs.id, SLEEP);
-	safe_sleep_thread(program->attrs.time_to_sleep, &program->attrs.error);
+	ft_usleep(program->attrs.time_to_sleep);
 }
 
 void	thinking(t_philo *philo, t_philo_two *program)

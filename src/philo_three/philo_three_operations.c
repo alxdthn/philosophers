@@ -11,9 +11,8 @@
 /* ************************************************************************** */
 
 #include "philo_three.h"
-#include "philo_print.h"
 
-int		eating(t_philo_three *program)
+void 	eating(t_philo_three *program)
 {
 	t_attrs			*program_attrs;
 	t_philo_attrs	*philo_attrs;
@@ -23,12 +22,10 @@ int		eating(t_philo_three *program)
 	philo_attrs->eat_count++;
 	philo_attrs->last_meal = get_current_time_stamp();
 	print_status(program_attrs, philo_attrs->id, EAT);
-	if (usleep(program_attrs->time_to_eat) == -1)
-		return (error("error sleep\n"));
-	return (0);
+	ft_usleep(program_attrs->time_to_eat);
 }
 
-int		sleeping(t_philo_three *program)
+void 	sleeping(t_philo_three *program)
 {
 	t_attrs			*program_attrs;
 	t_philo_attrs	*philo_attrs;
@@ -36,9 +33,7 @@ int		sleeping(t_philo_three *program)
 	program_attrs = &program->prog_attrs;
 	philo_attrs = program->philosopher_attrs;
 	print_status(program_attrs, philo_attrs->id, SLEEP);
-	if (usleep(program_attrs->time_to_sleep) == -1)
-		return (error("error sleep\n"));
-	return (0);
+	ft_usleep(program_attrs->time_to_sleep);
 }
 
 void	thinking(t_philo_three *program)

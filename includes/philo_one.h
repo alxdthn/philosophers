@@ -16,22 +16,22 @@
 # include "philo_utils.h"
 
 typedef struct		s_philo {
-	t_philo_attrs	attrs;
 	pthread_t		thread;
+	t_philo_attrs	attrs;
 	pthread_mutex_t	*left_hand_fork;
 	pthread_mutex_t	*right_hand_fork;
 }					t_philo;
 
 typedef struct		s_philo_one {
-	t_attrs	attrs;
+	t_attrs			attrs;
+	t_philo			*philosophers;
 	pthread_mutex_t	fork_taking_mutex;
 	pthread_mutex_t	*forks;
-	t_philo			*philosophers;
 }					t_philo_one;
 
 typedef struct		s_philo_process_argument {
-	t_philo_one		*program;
 	t_philo			*philosopher;
+	t_philo_one		*program;
 }					t_philo_process_argument;
 
 bool				create_philosophers(t_philo_one *program);

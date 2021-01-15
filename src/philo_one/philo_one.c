@@ -27,6 +27,9 @@ static void	*philo_process(void *arg)
 		program->attrs.error = "pthread detach\n";
 		pthread_exit(NULL);
 	}
+	program->attrs.ready_philo_number++;
+	if (philosopher->attrs.id % 2 == 0)
+		ft_usleep(EVEN_PHILO_THREAD_START_DELAY);
 	while (!program->attrs.error)
 	{
 		take_forks(philosopher, program);
@@ -56,8 +59,6 @@ static bool	run_philosophers(t_philo_one *program)
 		argument->philosopher = philosopher;
 		if (pthread_create(&philosopher->thread, NULL, philo_process, argument))
 			return (false);
-		if (usleep(EVEN_PHILO_THREAD_START_DELAY) == -1)
-			return (false);
 	}
 	return (true);
 }
@@ -67,7 +68,6 @@ int			main(int ac, char **av)
 	t_philo_one	program;
 
 	memset(&program, '\0', sizeof(t_philo_one));
-	program.attrs.monitor_frequency = MONITOR_FREQUENCY_USEC;
 	if (parse_args(ac, av, &program.attrs))
 		return (1);
 	if (!create_forks(&program))

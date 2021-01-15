@@ -39,7 +39,7 @@ int		usage(char *file_name)
 	return (1);
 }
 
-void	safe_sleep_thread(unsigned long time, char **error)
+void	ft_usleep(unsigned long time)
 {
 	unsigned long	sleep_start;
 	unsigned long	current_time;
@@ -49,12 +49,5 @@ void	safe_sleep_thread(unsigned long time, char **error)
 	sleep_start = get_current_time_stamp();
 	current_time = sleep_start;
 	while (time_ms > current_time - sleep_start)
-	{
 		current_time = get_current_time_stamp();
-	}
-	//if (usleep(time) == -1)
-	//{
-	//	*error = "sleep error\n";
-	//	pthread_exit(NULL);
-	//}
 }

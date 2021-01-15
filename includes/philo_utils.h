@@ -22,7 +22,6 @@
 # include <fcntl.h>
 # include <sys/stat.h>
 
-# define MONITOR_FREQUENCY_USEC 5000
 # define USEC_IN_MILLIS 1000
 # define UNSPECIFIED -1
 # define EVEN_PHILO_THREAD_START_DELAY 42
@@ -48,7 +47,7 @@ typedef struct		s_attrs {
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				eat_number;
-	int				monitor_frequency;
+	unsigned int	ready_philo_number;
 	char			*error;
 	unsigned long	time_to_die;
 	unsigned long	start_time;
@@ -83,7 +82,7 @@ void				safe_lock_mutex(pthread_mutex_t *mutex, char **error);
 
 void				safe_unlock_mutex(pthread_mutex_t *mutex, char **error);
 
-void				safe_sleep_thread(unsigned long time, char **error);
+void				ft_usleep(unsigned long time);
 
 void				safe_sem_wait_thread(sem_t *sem, char **error);
 
