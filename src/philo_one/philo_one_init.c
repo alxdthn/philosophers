@@ -15,17 +15,25 @@
 static void	set_data(t_philo *res, t_philo_attrs **philo, t_philo_one *program)
 {
 	register int	i;
-	int				left_philo_index;
-	int				right_philo_index;
+	pthread_mutex_t *current_fork;
+	pthread_mutex_t *next_fork;
 
 	i = 0;
 	while (i < program->attrs.n_philo)
 	{
-		left_philo_index = (i < program->attrs.n_philo) ? i : 0;
-		right_philo_index = (i + 1 > program->attrs.n_philo - 1) ? 0 : i + 1;
 		res[i].attrs.id = i + 1;
-		res[i].left_hand_fork = &program->forks[left_philo_index];
-		res[i].right_hand_fork = &program->forks[right_philo_index];
+		current_fork = &program->forks[i];
+		next_fork = &program->forks[(i + 1) % program->attrs.n_philo];
+		if (res[i].attrs.id == program->attrs.n_philo)
+		{
+			res[i].left_hand_fork = next_fork;
+			res[i].right_hand_fork = current_fork;
+		}
+		else
+		{
+			res[i].left_hand_fork = current_fork;
+			res[i].right_hand_fork = next_fork;
+		}
 		philo[i] = &res[i].attrs;
 		i++;
 	}
@@ -51,8 +59,8 @@ bool		create_philosophers(t_philo_one *program)
 
 bool		create_forks(t_philo_one *program)
 {
-	pthread_mutex_t 	*result;
-	register int	i;
+	pthread_mutex_t		*result;
+	register int		i;
 
 	result = malloc(sizeof(pthread_mutex_t) * program->attrs.n_philo);
 	if (!result)

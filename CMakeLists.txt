@@ -79,3 +79,6 @@ add_executable(test_strings
         includes/philo_utils.h)
 
 target_include_directories(test_strings PUBLIC includes)
+
+add_executable(test
+        test/test.c)

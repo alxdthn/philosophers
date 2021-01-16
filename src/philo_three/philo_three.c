@@ -12,6 +12,18 @@
 
 #include "philo_three.h"
 
+static bool	is_dieds(t_philo_attrs *philo, t_attrs *program)
+{
+	unsigned long	current_time;
+	bool			result;
+
+	current_time = get_current_time_stamp();
+	result = (current_time - philo->last_meal) > program->time_to_die;
+	if (result)
+		printf("%ld - %ld = %ld > %ld? %s %d\n", current_time, philo->last_meal, current_time - philo->last_meal, program->time_to_die, "true", result);
+	return (result);
+}
+
 static void	*monitor_thread(void *arg)
 {
 	t_philo_three	*program;
@@ -21,18 +33,23 @@ static void	*monitor_thread(void *arg)
 	philosopher = program->philosopher_attrs;
 	while (true)
 	{
-		if (is_died(philosopher, &program->prog_attrs))
+		if (is_dieds(philosopher, &program->prog_attrs))
 		{
 			print_status(&program->prog_attrs, philosopher->id, DIE);
-			exit(SIGCHLD);
+			exit(EXIT_DIE_BY_STARVATION);
 		}
+		else if (philosopher->eat_count == program->prog_attrs.eat_number)
+			exit(EXIT_SUCCESS);
 		if (program->prog_attrs.error)
 			exit(error(program->prog_attrs.error));
+		if (usleep(1) == -1)
+			exit(error("sleep error\n"));
 	}
 }
 
 static int	philosopher_process(t_philo_three *program)
 {
+	program->philosopher_attrs->last_meal = get_current_time_stamp();
 	while (true)
 	{
 		if (take_forks(program))
@@ -67,10 +84,7 @@ static bool	fork_philosophers(t_philo_three *program)
 			return (true);
 		}
 		else if (pid > 0)
-		{
 			program->children_pid[i++] = pid;
-			ft_usleep(EVEN_PHILO_THREAD_START_DELAY);
-		}
 		else
 			return (false);
 	}
@@ -79,8 +93,6 @@ static bool	fork_philosophers(t_philo_three *program)
 
 static int	resolve_fork(t_philo_three *program)
 {
-	register int	i;
-
 	if (program->is_child)
 	{
 		if (pthread_create(&program->monitor, NULL, monitor_thread, program))
@@ -89,9 +101,17 @@ static int	resolve_fork(t_philo_three *program)
 	}
 	else
 	{
-		i = 0;
-		while (i < program->prog_attrs.n_philo)
-			waitpid(program->children_pid[i++], NULL, WUNTRACED);
+		int 	result_code;
+		int 	count;
+
+		count = program->prog_attrs.n_philo;
+		while (count > 0)
+		{
+			result_code = 0;
+			waitpid(-1, &result_code, WUNTRACED);
+			if (!(result_code & EXIT_DIE_BY_STARVATION))
+				break;
+		}
 		return (exit_program(program, EXIT_SUCCESS));
 	}
 }

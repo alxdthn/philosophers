@@ -30,6 +30,8 @@
 # define TIME 0
 # define ID 1
 # define STATUS 2
+# define EXIT_DIE_BY_ERROR 1
+# define EXIT_DIE_BY_STARVATION 2
 # define EAT " is eating\n"
 # define SLEEP " is sleeping\n"
 # define THINK " is thinking\n"
