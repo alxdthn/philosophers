@@ -12,18 +12,6 @@
 
 #include "philo_three.h"
 
-static bool	is_dieds(t_philo_attrs *philo, t_attrs *program)
-{
-	unsigned long	current_time;
-	bool			result;
-
-	current_time = get_current_time_stamp();
-	result = (current_time - philo->last_meal) > program->time_to_die;
-	if (result)
-		printf("%ld - %ld = %ld > %ld? %s %d\n", current_time, philo->last_meal, current_time - philo->last_meal, program->time_to_die, "true", result);
-	return (result);
-}
-
 static void	*monitor_thread(void *arg)
 {
 	t_philo_three	*program;
@@ -33,7 +21,7 @@ static void	*monitor_thread(void *arg)
 	philosopher = program->philosopher_attrs;
 	while (true)
 	{
-		if (is_dieds(philosopher, &program->prog_attrs))
+		if (is_died(philosopher, &program->prog_attrs))
 		{
 			print_status(&program->prog_attrs, philosopher->id, DIE);
 			exit(EXIT_DIE_BY_STARVATION);

@@ -15,14 +15,9 @@
 bool	is_died(t_philo_attrs *philo, t_attrs *program)
 {
 	unsigned long	current_time;
-	bool			result;
 
 	current_time = get_current_time_stamp();
-	result = (current_time - philo->last_meal) > program->time_to_die;
-
-	if (result)
-		printf("%ld - %ld = %ld > %ld? %s\n", current_time, philo->last_meal, current_time - philo->last_meal, program->time_to_die, "true");
-	return (result);
+	return (current_time - philo->last_meal > program->time_to_die);
 }
 
 int 	kill_philo(t_attrs *program, t_philo_attrs *philo)
@@ -56,5 +51,7 @@ int		monitor_process(t_attrs *program)
 			return (kill_philo(program, philo));
 		if (program->error)
 			return (error(program->error));
+		if (usleep(1) == -1)
+			return error("sleep error\n");
 	}
 }
