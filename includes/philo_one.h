@@ -15,6 +15,7 @@
 
 # include "philo_utils.h"
 
+
 pthread_mutex_t		g_print_mutex;
 
 typedef struct		s_philo {
