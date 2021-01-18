@@ -23,6 +23,7 @@
 # include <sys/stat.h>
 
 # define USEC_IN_MILLIS 1000
+# define MONITOR_FREQUENCY_USEC 1000
 # define UNSPECIFIED -1
 # define EVEN_PHILO_THREAD_START_DELAY 42
 # define FORKS_SEM_NAME "/forks"
@@ -30,13 +31,16 @@
 # define TIME 0
 # define ID 1
 # define STATUS 2
-# define EXIT_DIE_BY_ERROR 1
-# define EXIT_DIE_BY_STARVATION 2
 # define EAT " is eating\n"
 # define SLEEP " is sleeping\n"
 # define THINK " is thinking\n"
 # define FORK " has taken a fork\n"
 # define DIE " died\n"
+
+typedef struct		s_print_lock {
+	void 			(* lock)(void);
+	void 			(* unlock)(void);
+}					t_print_lock;
 
 typedef struct		s_philo_attrs {
 	int				id;
@@ -49,11 +53,12 @@ typedef struct		s_attrs {
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				eat_number;
-	unsigned int	ready_philo_number;
+	int				ready_philo_number;
 	char			*error;
 	unsigned long	time_to_die;
 	unsigned long	start_time;
 	t_philo_attrs	**philo_attrs;
+	t_print_lock	print_lock;
 }					t_attrs;
 
 int					parse_args(int ac, char **av, t_attrs *result);
@@ -66,15 +71,15 @@ char				*get_file_name(char *str);
 
 int					ft_isdigit(char c);
 
-void				ft_memcpy(void *dst, void *src, size_t size);
-
 void				ft_putstr(const char *str);
 
 void				ft_putstr_fd(const char *str, int fd);
 
+void				ft_putnbr(unsigned long nbr);
+
 int					ft_atoi(const char *str);
 
-char				*ft_ultoa(unsigned long number);
+char				*ft_ultoa(unsigned long number, int *result_len);
 
 int					error(const char *message);
 
@@ -90,7 +95,7 @@ void				safe_sem_wait_thread(sem_t *sem, char **error);
 
 void				safe_sem_post_thread(sem_t *sem, char **error);
 
-sem_t				*create_semaphore(unsigned long init_value);
+sem_t				*create_semaphore(unsigned long init_value, const char *name);
 
 bool				is_died(t_philo_attrs *philo, t_attrs *program);
 

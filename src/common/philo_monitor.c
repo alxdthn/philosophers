@@ -51,7 +51,6 @@ int		monitor_process(t_attrs *program)
 			return (kill_philo(program, philo));
 		if (program->error)
 			return (error(program->error));
-		if (usleep(1) == -1)
-			return error("sleep error\n");
+		usleep(MONITOR_FREQUENCY_USEC);
 	}
 }

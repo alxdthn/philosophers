@@ -27,5 +27,10 @@ int	exit_program(t_philo_three *program, int exit_code)
 		sem_close(program->forks_sem);
 		sem_unlink(FORKS_SEM_NAME);
 	}
+	if (g_print_sem)
+	{
+		sem_close(g_print_sem);
+		sem_unlink(PRINT_SEM_NAME);
+	}
 	return (exit_code);
 }

@@ -67,12 +67,14 @@ int			main(int ac, char **av)
 	memset(&program, '\0', sizeof(t_philo_two));
 	if (parse_args(ac, av, &program.attrs))
 		return (exit_program(NULL, EXIT_SUCCESS));
-	sem = create_semaphore(program.attrs.n_philo);
+	sem = create_semaphore(program.attrs.n_philo, FORKS_SEM_NAME);
 	if (sem == SEM_FAILED)
 		return (exit_program(NULL, error("error create semaphore\n")));
 	program.forks_sem = sem;
 	if (!create_philosophers(&program))
 		return (exit_program(sem, error("error init philosophers\n")));
+	if (!init_print_lock(&program))
+		return (exit_program(sem, error("error init print mutex")));
 	if (!run_philosophers(&program))
 		return (exit_program(sem, error("error run philosophers\n")));
 	return (exit_program(sem, monitor_process(&program.attrs)));

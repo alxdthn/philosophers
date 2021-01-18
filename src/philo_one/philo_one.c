@@ -76,6 +76,8 @@ int			main(int ac, char **av)
 		return (error("error pthread mutex init\n"));
 	if (!create_philosophers(&program))
 		return (error("error init philosophers\n"));
+	if (!init_print_lock(&program))
+		return (error("error init print mutex"));
 	if (!run_philosophers(&program))
 		return (error("error run philosophers\n"));
 	return (monitor_process(&program.attrs));

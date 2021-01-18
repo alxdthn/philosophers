@@ -6,6 +6,7 @@ set(CMAKE_C_STANDARD 11)
 add_executable(philo_one
         src/philo_one/philo_one.c
         src/philo_one/philo_one_init.c
+        src/philo_one/philo_one_init2.c
         src/philo_one/philo_one_operations.c
         includes/philo_one.h
         src/common/philo_time.c

@@ -12,10 +12,10 @@
 
 #include "philo_utils.h"
 
-sem_t	*create_semaphore(unsigned long init_value)
+sem_t	*create_semaphore(unsigned long init_value, const char *name)
 {
-	sem_unlink(FORKS_SEM_NAME);
-	return (sem_open(FORKS_SEM_NAME, O_CREAT, FORKS_SEM_FLAGS, init_value));
+	sem_unlink(name);
+	return (sem_open(name, O_CREAT, FORKS_SEM_FLAGS, init_value));
 }
 
 void	safe_sem_wait_thread(sem_t *sem, char **error)

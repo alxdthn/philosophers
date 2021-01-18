@@ -24,6 +24,7 @@ COMMON_OBJ =		$(addprefix $(OBJD), $(patsubst %.c, %.o, $(COMMON_SRC)))
 
 PHILO_ONE_SRC =		src/philo_one/philo_one.c \
                		src/philo_one/philo_one_init.c \
+               		src/philo_one/philo_one_init2.c \
                		src/philo_one/philo_one_operations.c
 PHILO_ONE_OBJ =		$(addprefix $(OBJD), $(patsubst %.c, %.o, $(PHILO_ONE_SRC)))
 

@@ -16,6 +16,10 @@
 # include "philo_utils.h"
 # include <libc.h>
 
+# define PRINT_SEM_NAME	"/philo_three_print"
+
+sem_t				*g_print_sem;
+
 typedef struct		s_philo_three {
 	bool			is_child;
 	pid_t			*children_pid;
@@ -26,6 +30,8 @@ typedef struct		s_philo_three {
 }					t_philo_three;
 
 bool				create_philosophers(t_philo_three *program);
+
+void				init_print_lock(t_philo_three *program);
 
 int					exit_program(t_philo_three *program, int exit_code);
 

@@ -21,17 +21,16 @@ static void	*monitor_thread(void *arg)
 	philosopher = program->philosopher_attrs;
 	while (true)
 	{
-		if (is_died(philosopher, &program->prog_attrs))
+		if (is_died(philosopher, &program->prog_attrs) ||
+			philosopher->eat_count == program->prog_attrs.eat_number
+		)
 		{
 			print_status(&program->prog_attrs, philosopher->id, DIE);
-			exit(EXIT_DIE_BY_STARVATION);
-		}
-		else if (philosopher->eat_count == program->prog_attrs.eat_number)
 			exit(EXIT_SUCCESS);
+		}
 		if (program->prog_attrs.error)
 			exit(error(program->prog_attrs.error));
-		if (usleep(1) == -1)
-			exit(error("sleep error\n"));
+		usleep(MONITOR_FREQUENCY_USEC);
 	}
 }
 
@@ -89,17 +88,7 @@ static int	resolve_fork(t_philo_three *program)
 	}
 	else
 	{
-		int 	result_code;
-		int 	count;
-
-		count = program->prog_attrs.n_philo;
-		while (count > 0)
-		{
-			result_code = 0;
-			waitpid(-1, &result_code, WUNTRACED);
-			if (!(result_code & EXIT_DIE_BY_STARVATION))
-				break;
-		}
+		waitpid(-1, NULL, 0);
 		return (exit_program(program, EXIT_SUCCESS));
 	}
 }
@@ -111,8 +100,11 @@ int			main(int ac, char **av)
 	memset(&program, '\0', sizeof(t_philo_three));
 	if (parse_args(ac, av, &program.prog_attrs))
 		return (exit_program(NULL, EXIT_SUCCESS));
-	program.forks_sem = create_semaphore(program.prog_attrs.n_philo);
+	program.forks_sem = create_semaphore(program.prog_attrs.n_philo, FORKS_SEM_NAME);
 	if (program.forks_sem == SEM_FAILED)
+		return (exit_program(&program, error("error create semaphore\n")));
+	init_print_lock(&program);
+	if (g_print_sem == SEM_FAILED)
 		return (exit_program(&program, error("error create semaphore\n")));
 	if (!create_philosophers(&program))
 		return (exit_program(&program, error("error init philosophers\n")));

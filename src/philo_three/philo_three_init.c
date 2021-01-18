@@ -12,7 +12,24 @@
 
 #include "philo_three.h"
 
-bool	create_philosophers(t_philo_three *program)
+static void print_lock(void)
+{
+	sem_wait(g_print_sem);
+}
+
+static void	print_unlock(void)
+{
+	sem_post(g_print_sem);
+}
+
+void		init_print_lock(t_philo_three *program)
+{
+	g_print_sem = create_semaphore(1, PRINT_SEM_NAME);
+	program->prog_attrs.print_lock.lock = print_lock;
+	program->prog_attrs.print_lock.unlock = print_unlock;
+}
+
+bool		create_philosophers(t_philo_three *program)
 {
 	register int	i;
 	t_philo_attrs	**attrs;

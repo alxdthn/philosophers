@@ -15,6 +15,8 @@
 
 # include "philo_utils.h"
 
+pthread_mutex_t		g_print_mutex;
+
 typedef struct		s_philo {
 	t_philo_attrs	attrs;
 	pthread_t		thread;
@@ -32,6 +34,8 @@ typedef struct		s_philo_process_argument {
 }					t_philo_process_argument;
 
 bool				create_philosophers(t_philo_two *program);
+
+bool				init_print_lock(t_philo_two *program);
 
 int					exit_program(sem_t *sem, int exit_code);
 

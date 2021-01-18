@@ -40,7 +40,7 @@ int		ft_isdigit(char c)
 	return (c >= '0' && c <= '9');
 }
 
-char	*ft_ultoa(unsigned long number)
+char	*ft_ultoa(unsigned long number, int *result_len)
 {
 	char			*result;
 	int				number_len;
@@ -50,6 +50,7 @@ char	*ft_ultoa(unsigned long number)
 	number_len = ft_numlen(integer);
 	if (!(result = malloc(sizeof(char) * (number_len + 1))))
 		return (NULL);
+	*result_len = number_len;
 	result[number_len] = '\0';
 	while (--number_len >= 0)
 	{
