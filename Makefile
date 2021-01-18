@@ -10,6 +10,11 @@ OBJD = obj/
 
 INCLUDES = includes/
 
+HEADERS =			$(INCLUDES)philo_one.h \
+					$(INCLUDES)philo_two.h \
+					$(INCLUDES)philo_three.h \
+					$(INCLUDES)philo_utils.h
+
 COMMON_SRC =		src/common/philo_monitor.c \
             		src/common/philo_mutex.c \
             		src/common/philo_parse.c \
@@ -60,7 +65,7 @@ $(PHILO_THREE): $(PHILO_THREE_OBJ) $(COMMON_OBJ)
 	@printf $@
 	@printf "\x1b[0m\n"
 
-$(OBJD)%.o: %.c
+$(OBJD)%.o: %.c $(HEADERS)
 	@mkdir -p $(dir $@)
 	@gcc $(CFLAGS) -o $@ -c $< -I $(INCLUDES)
 	@printf "\x1b[33mCompile object: "

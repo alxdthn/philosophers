@@ -6,7 +6,7 @@
 /*   By: nalexand <nalexand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 20:24:35 by nalexand          #+#    #+#             */
-/*   Updated: 2021/01/18 22:24:07 by nalexand         ###   ########.fr       */
+/*   Updated: 2021/01/18 22:24:17 by nalexand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int		monitor_process(t_attrs *program)
 				return (kill_philo(program, philo));
 		}
 		if (program->eat_number != UNSPECIFIED && should_kill_by_eat_num)
-			return (kill_philo(program, philo));
+			return (EXIT_SUCCESS);
 		if (program->error)
 			return (error(program->error));
 		usleep(MONITOR_FREQUENCY_USEC);
