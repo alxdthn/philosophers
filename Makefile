@@ -4,7 +4,7 @@ PHILO_ONE = philo_one
 PHILO_TWO = philo_two
 PHILO_THREE = philo_three
 
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -g
 
 OBJD = obj/
 

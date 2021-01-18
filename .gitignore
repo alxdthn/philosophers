@@ -7,3 +7,4 @@ a.out
 /philo_two
 /philo_three
 obj
+*.dSYM

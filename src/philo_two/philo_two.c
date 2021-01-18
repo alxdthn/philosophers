@@ -6,7 +6,7 @@
 /*   By: nalexand <nalexand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 22:34:59 by nalexand          #+#    #+#             */
-/*   Updated: 2021/01/12 22:59:30 by nalexand         ###   ########.fr       */
+/*   Updated: 2021/01/18 22:20:43 by nalexand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ static void	*philo_process(void *arg)
 	free(argument);
 	if (pthread_detach(philosopher->thread))
 		pthread_exit(NULL);
+	program->attrs.ready_philo_number++;
 	while (!program->attrs.error)
 	{
 		take_forks(philosopher, program);

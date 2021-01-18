@@ -6,7 +6,7 @@
 /*   By: nalexand <nalexand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 20:24:35 by nalexand          #+#    #+#             */
-/*   Updated: 2021/01/18 22:24:17 by nalexand         ###   ########.fr       */
+/*   Updated: 2021/01/18 22:45:12 by nalexand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ bool	is_died(t_philo_attrs *philo, t_attrs *program)
 
 int		kill_philo(t_attrs *program, t_philo_attrs *philo)
 {
+	free(program->philo_attrs);
 	print_status(program, philo->id, DIE);
 	return (EXIT_SUCCESS);
 }
