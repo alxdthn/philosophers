@@ -19,9 +19,14 @@ void 	eating(t_philo_three *program)
 
 	program_attrs = &program->prog_attrs;
 	philo_attrs = program->philosopher_attrs;
-	philo_attrs->eat_count++;
 	philo_attrs->last_meal = get_current_time_stamp();
 	print_status(program_attrs, philo_attrs->id, EAT);
+	philo_attrs->eat_count++;
+	if (philo_attrs->eat_count == program->prog_attrs.eat_number)
+	{
+		drop_forks(program);
+		exit(EXIT_BY_EAT_COUNT);
+	}
 	ft_usleep(program_attrs->time_to_eat);
 }
 

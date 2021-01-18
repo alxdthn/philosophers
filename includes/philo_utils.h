@@ -103,7 +103,7 @@ int					monitor_process(t_attrs *program);
 
 unsigned long		get_current_time_stamp(void);
 
-unsigned long		get_time_offset(unsigned long current_time);
+unsigned long		get_time_offset(unsigned long start_time);
 
 void				print_status(t_attrs *attrs, int id, char *status);
 

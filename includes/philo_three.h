@@ -17,6 +17,9 @@
 # include <libc.h>
 
 # define PRINT_SEM_NAME	"/philo_three_print"
+# define EXIT_BY_STARVATION 12
+# define EXIT_BY_EAT_COUNT 13
+# define EXIT_BY_ERROR 14
 
 sem_t				*g_print_sem;
 

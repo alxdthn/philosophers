@@ -21,15 +21,16 @@ static void	*monitor_thread(void *arg)
 	philosopher = program->philosopher_attrs;
 	while (true)
 	{
-		if (is_died(philosopher, &program->prog_attrs) ||
-			philosopher->eat_count == program->prog_attrs.eat_number
-		)
+		if (is_died(philosopher, &program->prog_attrs))
 		{
 			print_status(&program->prog_attrs, philosopher->id, DIE);
-			exit(EXIT_SUCCESS);
+			exit(EXIT_BY_STARVATION);
 		}
 		if (program->prog_attrs.error)
-			exit(error(program->prog_attrs.error));
+		{
+			error(program->prog_attrs.error);
+			exit(EXIT_BY_ERROR);
+		}
 		usleep(MONITOR_FREQUENCY_USEC);
 	}
 }
@@ -80,6 +81,11 @@ static bool	fork_philosophers(t_philo_three *program)
 
 static int	resolve_fork(t_philo_three *program)
 {
+	int 	status;
+	int 	max_eat_count;
+
+	status = 1;
+	max_eat_count = 0;
 	if (program->is_child)
 	{
 		if (pthread_create(&program->monitor, NULL, monitor_thread, program))
@@ -88,7 +94,14 @@ static int	resolve_fork(t_philo_three *program)
 	}
 	else
 	{
-		waitpid(-1, NULL, 0);
+		while (!(status & EXIT_BY_STARVATION) && !(status & EXIT_BY_ERROR))
+		{
+			waitpid(-1, &status, 0);
+			if (!(status & EXIT_BY_EAT_COUNT))
+				max_eat_count++;
+			if (max_eat_count == program->prog_attrs.n_philo)
+				break;
+		}
 		return (exit_program(program, EXIT_SUCCESS));
 	}
 }
