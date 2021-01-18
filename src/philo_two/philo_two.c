@@ -75,6 +75,8 @@ int			main(int ac, char **av)
 		return (exit_program(sem, error("error init philosophers\n")));
 	if (!init_print_lock(&program))
 		return (exit_program(sem, error("error init print mutex")));
+	if (pthread_mutex_init(&program.fork_taking_mutex, NULL))
+		return (exit_program(sem, error("error init forks mutex")));
 	if (!run_philosophers(&program))
 		return (exit_program(sem, error("error run philosophers\n")));
 	return (exit_program(sem, monitor_process(&program.attrs)));

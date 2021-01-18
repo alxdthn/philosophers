@@ -24,8 +24,9 @@ typedef struct		s_philo {
 
 typedef struct		s_philo_two {
 	sem_t			*forks_sem;
-	t_attrs	attrs;
+	t_attrs			attrs;
 	t_philo			*philosophers;
+	pthread_mutex_t	fork_taking_mutex;
 }					t_philo_two;
 
 typedef struct		s_philo_process_argument {

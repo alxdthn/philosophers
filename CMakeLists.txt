@@ -32,6 +32,7 @@ add_executable(philo_two
         src/common/philo_print.c
         src/common/philo_parse.c
         src/common/philo_monitor.c
+        src/common/philo_mutex.c
         src/common/philo_semaphore.c
         src/common/philo_utils.c
         src/common/philo_utils_memory.c

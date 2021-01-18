@@ -28,9 +28,6 @@
 # define EVEN_PHILO_THREAD_START_DELAY 42
 # define FORKS_SEM_NAME "/forks"
 # define FORKS_SEM_FLAGS 0644
-# define TIME 0
-# define ID 1
-# define STATUS 2
 # define EAT " is eating\n"
 # define SLEEP " is sleeping\n"
 # define THINK " is thinking\n"

@@ -28,6 +28,8 @@ static void	*philo_process(void *arg)
 		pthread_exit(NULL);
 	}
 	program->attrs.ready_philo_number++;
+	if (philosopher->attrs.id % 2 == 0)
+		ft_usleep(program->attrs.time_to_eat / 8);
 	while (!program->attrs.error)
 	{
 		take_forks(philosopher, program);

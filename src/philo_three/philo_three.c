@@ -119,6 +119,9 @@ int			main(int ac, char **av)
 	init_print_lock(&program);
 	if (g_print_sem == SEM_FAILED)
 		return (exit_program(&program, error("error create semaphore\n")));
+	g_forks_taking_sem = create_semaphore(1, FORKS_TAKING_SEM_NAME);
+	if (g_forks_taking_sem == SEM_FAILED)
+		return (exit_program(&program, error("error create semaphore\n")));
 	if (!create_philosophers(&program))
 		return (exit_program(&program, error("error init philosophers\n")));
 	program.prog_attrs.start_time = get_current_time_stamp();

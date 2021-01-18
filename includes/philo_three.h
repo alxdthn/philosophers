@@ -17,11 +17,13 @@
 # include <libc.h>
 
 # define PRINT_SEM_NAME	"/philo_three_print"
+# define FORKS_TAKING_SEM_NAME "/philo_three_forks_taking"
 # define EXIT_BY_STARVATION 12
 # define EXIT_BY_EAT_COUNT 13
 # define EXIT_BY_ERROR 14
 
 sem_t				*g_print_sem;
+sem_t 				*g_forks_taking_sem;
 
 typedef struct		s_philo_three {
 	bool			is_child;

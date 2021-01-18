@@ -23,14 +23,10 @@ int	exit_program(t_philo_three *program, int exit_code)
 			kill(program->children_pid[i++], SIGKILL);
 	}
 	if (program->forks_sem)
-	{
-		sem_close(program->forks_sem);
 		sem_unlink(FORKS_SEM_NAME);
-	}
 	if (g_print_sem)
-	{
-		sem_close(g_print_sem);
 		sem_unlink(PRINT_SEM_NAME);
-	}
+	if (g_forks_taking_sem)
+		sem_unlink(FORKS_TAKING_SEM_NAME);
 	return (exit_code);
 }

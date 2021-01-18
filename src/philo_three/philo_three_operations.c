@@ -56,6 +56,8 @@ int		take_forks(t_philo_three *program)
 	t_attrs			*program_attrs;
 	t_philo_attrs	*philo_attrs;
 
+	if (sem_wait(g_forks_taking_sem))
+		return (error("error sem wait\n"));
 	program_attrs = &program->prog_attrs;
 	philo_attrs = program->philosopher_attrs;
 	if (sem_wait(program->forks_sem) == -1)
@@ -64,6 +66,8 @@ int		take_forks(t_philo_three *program)
 	if (sem_wait(program->forks_sem) == -1)
 		return (error("error sem wait\n"));
 	print_status(program_attrs, philo_attrs->id, FORK);
+	if (sem_post(g_forks_taking_sem))
+		return (error("error sem post\n"));
 	return (0);
 }
 
