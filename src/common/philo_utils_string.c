@@ -6,7 +6,7 @@
 /*   By: nalexand <nalexand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 21:59:09 by nalexand          #+#    #+#             */
-/*   Updated: 2021/01/12 22:59:30 by nalexand         ###   ########.fr       */
+/*   Updated: 2021/01/18 22:23:45 by nalexand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,12 +63,12 @@ char	*get_file_name(char *str)
 
 void	ft_putnbr(unsigned long nbr)
 {
-	char 	*nbr_string;
-	int 	len;
+	char	*nbr_string;
+	int		len;
 
 	nbr_string = ft_ultoa(nbr, &len);
 	if (!nbr_string)
-		return;
+		return ;
 	write(1, nbr_string, len);
 	free(nbr_string);
 }

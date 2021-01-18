@@ -6,7 +6,7 @@
 /*   By: nalexand <nalexand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 21:59:51 by nalexand          #+#    #+#             */
-/*   Updated: 2021/01/14 18:30:22 by nalexand         ###   ########.fr       */
+/*   Updated: 2021/01/18 22:19:44 by nalexand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,7 @@ static void	*philo_process(void *arg)
 	philosopher = argument->philosopher;
 	philosopher->attrs.last_meal = program->attrs.start_time;
 	free(argument);
-	if (pthread_detach(philosopher->thread)) {
-		program->attrs.error = "pthread detach\n";
-		pthread_exit(NULL);
-	}
+	pthread_detach(philosopher->thread);
 	program->attrs.ready_philo_number++;
 	if (philosopher->attrs.id % 2 == 0)
 		ft_usleep(program->attrs.time_to_eat / 8);

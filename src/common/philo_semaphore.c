@@ -12,7 +12,7 @@
 
 #include "philo_utils.h"
 
-sem_t	*create_semaphore(unsigned long init_value, const char *name)
+sem_t	*create_sem(unsigned long init_value, const char *name)
 {
 	sem_unlink(name);
 	return (sem_open(name, O_CREAT, FORKS_SEM_FLAGS, init_value));

@@ -6,7 +6,7 @@
 /*   By: nalexand <nalexand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 22:57:59 by nalexand          #+#    #+#             */
-/*   Updated: 2021/01/14 18:30:14 by nalexand         ###   ########.fr       */
+/*   Updated: 2021/01/18 22:20:43 by nalexand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@
 # define DIE " died\n"
 
 typedef struct		s_print_lock {
-	void 			(* lock)(void);
-	void 			(* unlock)(void);
+	void			(* lock)(void);
+	void			(* unlock)(void);
 }					t_print_lock;
 
 typedef struct		s_philo_attrs {
@@ -92,7 +92,7 @@ void				safe_sem_wait_thread(sem_t *sem, char **error);
 
 void				safe_sem_post_thread(sem_t *sem, char **error);
 
-sem_t				*create_semaphore(unsigned long init_value, const char *name);
+sem_t				*create_sem(unsigned long init_value, const char *name);
 
 bool				is_died(t_philo_attrs *philo, t_attrs *program);
 

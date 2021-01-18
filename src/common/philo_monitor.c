@@ -6,7 +6,7 @@
 /*   By: nalexand <nalexand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 20:24:35 by nalexand          #+#    #+#             */
-/*   Updated: 2021/01/14 18:30:14 by nalexand         ###   ########.fr       */
+/*   Updated: 2021/01/18 22:24:07 by nalexand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ bool	is_died(t_philo_attrs *philo, t_attrs *program)
 	return (current_time - philo->last_meal > program->time_to_die);
 }
 
-int 	kill_philo(t_attrs *program, t_philo_attrs *philo)
+int		kill_philo(t_attrs *program, t_philo_attrs *philo)
 {
 	print_status(program, philo->id, DIE);
 	return (EXIT_SUCCESS);
@@ -30,12 +30,10 @@ int		monitor_process(t_attrs *program)
 {
 	t_philo_attrs	*philo;
 	register int	i;
-	int 			should_kill_by_eat_num;
+	int				should_kill_by_eat_num;
 
 	while (program->ready_philo_number < program->n_philo)
-	{
-
-	}
+		usleep(1);
 	while (true)
 	{
 		i = 0;

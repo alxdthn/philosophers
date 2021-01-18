@@ -6,13 +6,13 @@
 /*   By: nalexand <nalexand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 22:29:55 by nalexand          #+#    #+#             */
-/*   Updated: 2021/01/12 22:59:30 by nalexand         ###   ########.fr       */
+/*   Updated: 2021/01/18 22:20:43 by nalexand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_three.h"
 
-static void print_lock(void)
+static void	print_lock(void)
 {
 	sem_wait(g_print_sem);
 }
@@ -24,7 +24,7 @@ static void	print_unlock(void)
 
 void		init_print_lock(t_philo_three *program)
 {
-	g_print_sem = create_semaphore(1, PRINT_SEM_NAME);
+	g_print_sem = create_sem(1, PRINT_SEM_NAME);
 	program->prog_attrs.print_lock.lock = print_lock;
 	program->prog_attrs.print_lock.unlock = print_unlock;
 }

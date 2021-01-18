@@ -6,7 +6,7 @@
 /*   By: nalexand <nalexand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 22:21:40 by nalexand          #+#    #+#             */
-/*   Updated: 2021/01/12 22:59:30 by nalexand         ###   ########.fr       */
+/*   Updated: 2021/01/18 22:20:32 by nalexand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,8 @@ static bool	fork_philosophers(t_philo_three *program)
 
 static int	resolve_fork(t_philo_three *program)
 {
-	int 	status;
-	int 	max_eat_count;
+	int		status;
+	int		max_eat_count;
 
 	status = 1;
 	max_eat_count = 0;
@@ -100,7 +100,7 @@ static int	resolve_fork(t_philo_three *program)
 			if (!(status & EXIT_BY_EAT_COUNT))
 				max_eat_count++;
 			if (max_eat_count == program->prog_attrs.n_philo)
-				break;
+				break ;
 		}
 		return (exit_program(program, EXIT_SUCCESS));
 	}
@@ -113,13 +113,13 @@ int			main(int ac, char **av)
 	memset(&program, '\0', sizeof(t_philo_three));
 	if (parse_args(ac, av, &program.prog_attrs))
 		return (exit_program(NULL, EXIT_SUCCESS));
-	program.forks_sem = create_semaphore(program.prog_attrs.n_philo, FORKS_SEM_NAME);
+	program.forks_sem = create_sem(program.prog_attrs.n_philo, FORKS_SEM_NAME);
 	if (program.forks_sem == SEM_FAILED)
 		return (exit_program(&program, error("error create semaphore\n")));
 	init_print_lock(&program);
 	if (g_print_sem == SEM_FAILED)
 		return (exit_program(&program, error("error create semaphore\n")));
-	g_forks_taking_sem = create_semaphore(1, FORKS_TAKING_SEM_NAME);
+	g_forks_taking_sem = create_sem(1, FORKS_TAKING_SEM_NAME);
 	if (g_forks_taking_sem == SEM_FAILED)
 		return (exit_program(&program, error("error create semaphore\n")));
 	if (!create_philosophers(&program))

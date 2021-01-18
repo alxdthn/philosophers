@@ -6,14 +6,13 @@
 /*   By: nalexand <nalexand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 22:45:37 by nalexand          #+#    #+#             */
-/*   Updated: 2021/01/12 22:59:30 by nalexand         ###   ########.fr       */
+/*   Updated: 2021/01/18 22:22:57 by nalexand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_two.h"
 
-
-static void print_lock(void)
+static void	print_lock(void)
 {
 	pthread_mutex_lock(&g_print_mutex);
 }
@@ -26,13 +25,13 @@ static void	print_unlock(void)
 bool		init_print_lock(t_philo_two *program)
 {
 	if (pthread_mutex_init(&g_print_mutex, NULL))
-		return false;
+		return (false);
 	program->attrs.print_lock.lock = print_lock;
 	program->attrs.print_lock.unlock = print_unlock;
-	return true;
+	return (true);
 }
 
-bool	create_philosophers(t_philo_two *program)
+bool		create_philosophers(t_philo_two *program)
 {
 	register int	i;
 	t_philo			*result;

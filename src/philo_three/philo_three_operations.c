@@ -12,7 +12,7 @@
 
 #include "philo_three.h"
 
-void 	eating(t_philo_three *program)
+void	eating(t_philo_three *program)
 {
 	t_attrs			*program_attrs;
 	t_philo_attrs	*philo_attrs;
@@ -30,7 +30,7 @@ void 	eating(t_philo_three *program)
 	ft_usleep(program_attrs->time_to_eat);
 }
 
-void 	sleeping(t_philo_three *program)
+void	sleeping(t_philo_three *program)
 {
 	t_attrs			*program_attrs;
 	t_philo_attrs	*philo_attrs;

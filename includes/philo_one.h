@@ -15,7 +15,6 @@
 
 # include "philo_utils.h"
 
-
 pthread_mutex_t		g_print_mutex;
 
 typedef struct		s_philo {
@@ -49,7 +48,7 @@ void				sleeping(t_philo *philo, t_philo_one *program);
 
 void				thinking(t_philo *philo, t_philo_one *program);
 
-void 				take_forks(t_philo *philo, t_philo_one *program);
+void				take_forks(t_philo *philo, t_philo_one *program);
 
 void				drop_forks(t_philo *philo, t_philo_one *program);
 

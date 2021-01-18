@@ -23,7 +23,7 @@
 # define EXIT_BY_ERROR 14
 
 sem_t				*g_print_sem;
-sem_t 				*g_forks_taking_sem;
+sem_t				*g_forks_taking_sem;
 
 typedef struct		s_philo_three {
 	bool			is_child;
@@ -40,9 +40,9 @@ void				init_print_lock(t_philo_three *program);
 
 int					exit_program(t_philo_three *program, int exit_code);
 
-void 				eating(t_philo_three *program);
+void				eating(t_philo_three *program);
 
-void 				sleeping(t_philo_three *program);
+void				sleeping(t_philo_three *program);
 
 int					take_forks(t_philo_three *program);
 

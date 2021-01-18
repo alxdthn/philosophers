@@ -31,7 +31,7 @@ void	thinking(t_philo *philo, t_philo_one *program)
 	print_status(&program->attrs, philo->attrs.id, THINK);
 }
 
-void 	take_forks(t_philo *philo, t_philo_one *program)
+void	take_forks(t_philo *philo, t_philo_one *program)
 {
 	safe_lock_mutex(&program->fork_taking_mutex, &program->attrs.error);
 	safe_lock_mutex(philo->left_hand_fork, &program->attrs.error);
