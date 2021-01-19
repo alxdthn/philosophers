@@ -55,7 +55,6 @@ static bool	run_philosophers(t_philo_two *program)
 		argument->philosopher = philosopher;
 		if (pthread_create(&philosopher->thread, NULL, philo_process, argument))
 			return (false);
-		ft_usleep(EVEN_PHILO_THREAD_START_DELAY);
 	}
 	return (true);
 }
