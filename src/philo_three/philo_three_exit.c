@@ -12,7 +12,7 @@
 
 #include "philo_three.h"
 
-int	exit_program(t_philo_three *program, int exit_code)
+void 	exit_program(t_philo_three *program, int exit_code)
 {
 	register int	i;
 
@@ -21,6 +21,7 @@ int	exit_program(t_philo_three *program, int exit_code)
 		i = 0;
 		while (i < program->prog_attrs.n_philo)
 			kill(program->children_pid[i++], SIGKILL);
+		free(program->children_pid);
 	}
 	if (program->forks_sem)
 		sem_unlink(FORKS_SEM_NAME);
@@ -28,5 +29,5 @@ int	exit_program(t_philo_three *program, int exit_code)
 		sem_unlink(PRINT_SEM_NAME);
 	if (g_forks_taking_sem)
 		sem_unlink(FORKS_TAKING_SEM_NAME);
-	return (exit_code);
+	exit(exit_code);
 }

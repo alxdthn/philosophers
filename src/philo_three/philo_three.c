@@ -57,7 +57,7 @@ static bool	fork_philosophers(t_philo_three *program)
 	pid_t			pid;
 
 	i = 0;
-	program->children_pid = malloc(sizeof(pid_t));
+	program->children_pid = malloc(sizeof(pid_t) * program->prog_attrs.n_philo);
 	if (!program->children_pid)
 		return (false);
 	while (i < program->prog_attrs.n_philo)
@@ -79,7 +79,7 @@ static bool	fork_philosophers(t_philo_three *program)
 	return (true);
 }
 
-static int	resolve_fork(t_philo_three *program)
+static void resolve_fork(t_philo_three *program)
 {
 	int		status;
 	int		max_eat_count;
@@ -89,8 +89,8 @@ static int	resolve_fork(t_philo_three *program)
 	if (program->is_child)
 	{
 		if (pthread_create(&program->monitor, NULL, monitor_thread, program))
-			return (exit_program(program, error("pthread_create\n")));
-		return (philosopher_process(program));
+			exit_program(program, error("pthread_create\n"));
+		philosopher_process(program);
 	}
 	else
 	{
@@ -102,7 +102,7 @@ static int	resolve_fork(t_philo_three *program)
 			if (max_eat_count == program->prog_attrs.n_philo)
 				break ;
 		}
-		return (exit_program(program, EXIT_SUCCESS));
+		exit_program(program, EXIT_SUCCESS);
 	}
 }
 
@@ -112,20 +112,20 @@ int			main(int ac, char **av)
 
 	memset(&program, '\0', sizeof(t_philo_three));
 	if (parse_args(ac, av, &program.prog_attrs))
-		return (exit_program(NULL, EXIT_SUCCESS));
+		exit_program(NULL, EXIT_SUCCESS);
 	program.forks_sem = create_sem(program.prog_attrs.n_philo, FORKS_SEM_NAME);
 	if (program.forks_sem == SEM_FAILED)
-		return (exit_program(&program, error("error create semaphore\n")));
+		exit_program(&program, error("error create semaphore\n"));
 	init_print_lock(&program);
 	if (g_print_sem == SEM_FAILED)
-		return (exit_program(&program, error("error create semaphore\n")));
+		exit_program(&program, error("error create semaphore\n"));
 	g_forks_taking_sem = create_sem(1, FORKS_TAKING_SEM_NAME);
 	if (g_forks_taking_sem == SEM_FAILED)
-		return (exit_program(&program, error("error create semaphore\n")));
+		exit_program(&program, error("error create semaphore\n"));
 	if (!create_philosophers(&program))
-		return (exit_program(&program, error("error init philosophers\n")));
+		exit_program(&program, error("error init philosophers\n"));
 	program.prog_attrs.start_time = get_current_time_stamp();
 	if (!fork_philosophers(&program))
-		return (exit_program(&program, error("error run philosophers\n")));
-	return (resolve_fork(&program));
+		exit_program(&program, error("error run philosophers\n"));
+	resolve_fork(&program);
 }

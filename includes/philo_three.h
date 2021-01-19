@@ -38,7 +38,7 @@ bool				create_philosophers(t_philo_three *program);
 
 void				init_print_lock(t_philo_three *program);
 
-int					exit_program(t_philo_three *program, int exit_code);
+void 				exit_program(t_philo_three *program, int exit_code);
 
 void				eating(t_philo_three *program);
 
