@@ -33,6 +33,9 @@
 # define THINK " is thinking\n"
 # define FORK " has taken a fork\n"
 # define DIE " died\n"
+# define TIME 0
+# define ID 1
+# define STATUS 2
 
 typedef struct		s_print_lock {
 	void			(* lock)(void);
@@ -77,6 +80,8 @@ void				ft_putnbr(unsigned long nbr);
 int					ft_atoi(const char *str);
 
 char				*ft_ultoa(unsigned long number, int *result_len);
+
+void				ft_memcpy(void *dst, void *src, size_t size);
 
 int					error(const char *message);
 
