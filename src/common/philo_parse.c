@@ -25,7 +25,7 @@ static int	get_and_validate_value(char *arg, int *dst, int ratio)
 		i++;
 	}
 	value = ft_atoi(arg) * ratio;
-	if (value < 0)
+	if (value <= 0)
 		return (1);
 	*dst = value;
 	return (0);
@@ -37,14 +37,14 @@ int			parse_args(int ac, char **av, t_attrs *result)
 		return (usage(get_file_name(av[0])));
 	result->eat_number = UNSPECIFIED;
 	if (get_and_validate_value(av[1], &result->n_philo, 1))
-		return (error("bad n_philo\n"));
+		return (error("bad number of philo\n"));
 	if (get_and_validate_value(av[2], (int *)&result->time_to_die, 1))
-		return (error("bad time_to_die\n"));
+		return (error("bad time to die\n"));
 	if (get_and_validate_value(av[3], &result->time_to_eat, USEC_IN_MILLIS))
-		return (error("bad time_to_eat\n"));
+		return (error("bad time to eat\n"));
 	if (get_and_validate_value(av[4], &result->time_to_sleep, USEC_IN_MILLIS))
-		return (error("bad time_to_sleep\n"));
+		return (error("bad time to sleep\n"));
 	if (ac == 6 && get_and_validate_value(av[5], &result->eat_number, 1))
-		return (error("bad eat_number\n"));
+		return (error("bad eat number\n"));
 	return (0);
 }

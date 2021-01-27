@@ -84,5 +84,3 @@ fclean: clean
 	rm -f $(PHILO_THREE)
 
 re: fclean all
-
-uniq = $(if $1,$(firstword $1) $(call uniq,$(filter-out $(firstword $1),$1)))

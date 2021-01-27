@@ -112,7 +112,7 @@ int			main(int ac, char **av)
 
 	memset(&program, '\0', sizeof(t_philo_three));
 	if (parse_args(ac, av, &program.prog_attrs))
-		exit_program(NULL, EXIT_SUCCESS);
+		exit_program(&program, EXIT_SUCCESS);
 	program.forks_sem = create_sem(program.prog_attrs.n_philo, FORKS_SEM_NAME);
 	if (program.forks_sem == SEM_FAILED)
 		exit_program(&program, error("error create semaphore\n"));
