@@ -20,7 +20,7 @@ void	eating(t_philo_three *program)
 	program_attrs = &program->prog_attrs;
 	philo_attrs = program->philosopher_attrs;
 	philo_attrs->last_meal = get_current_time_stamp();
-	print_status(program_attrs, philo_attrs->id, EAT);
+	print_status(program_attrs, philo_attrs->id, EAT, LOCK_PRINT);
 	philo_attrs->eat_count++;
 	if (philo_attrs->eat_count == program->prog_attrs.eat_number)
 	{
@@ -37,7 +37,7 @@ void	sleeping(t_philo_three *program)
 
 	program_attrs = &program->prog_attrs;
 	philo_attrs = program->philosopher_attrs;
-	print_status(program_attrs, philo_attrs->id, SLEEP);
+	print_status(program_attrs, philo_attrs->id, SLEEP, LOCK_PRINT);
 	ft_usleep(program_attrs->time_to_sleep);
 }
 
@@ -48,7 +48,7 @@ void	thinking(t_philo_three *program)
 
 	program_attrs = &program->prog_attrs;
 	philo_attrs = program->philosopher_attrs;
-	print_status(program_attrs, philo_attrs->id, THINK);
+	print_status(program_attrs, philo_attrs->id, THINK, LOCK_PRINT);
 }
 
 int		take_forks(t_philo_three *program)
@@ -62,10 +62,10 @@ int		take_forks(t_philo_three *program)
 	philo_attrs = program->philosopher_attrs;
 	if (sem_wait(program->forks_sem) == -1)
 		return (error("error sem wait\n"));
-	print_status(program_attrs, philo_attrs->id, FORK);
+	print_status(program_attrs, philo_attrs->id, FORK, LOCK_PRINT);
 	if (sem_wait(program->forks_sem) == -1)
 		return (error("error sem wait\n"));
-	print_status(program_attrs, philo_attrs->id, FORK);
+	print_status(program_attrs, philo_attrs->id, FORK, LOCK_PRINT);
 	if (sem_post(g_forks_taking_sem))
 		return (error("error sem post\n"));
 	return (0);

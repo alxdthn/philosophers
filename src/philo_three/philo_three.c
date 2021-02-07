@@ -23,7 +23,8 @@ static void	*monitor_thread(void *arg)
 	{
 		if (is_died(philosopher, &program->prog_attrs))
 		{
-			print_status(&program->prog_attrs, philosopher->id, DIE);
+			program->prog_attrs.print_lock.lock();
+			print_status(&program->prog_attrs, philosopher->id, DIE, DONT_LOCK);
 			exit(EXIT_BY_STARVATION);
 		}
 		if (program->prog_attrs.error)
@@ -75,6 +76,7 @@ static bool	fork_philosophers(t_philo_three *program)
 			program->children_pid[i++] = pid;
 		else
 			return (false);
+		ft_usleep(PHILO_START_OFFSET);
 	}
 	return (true);
 }

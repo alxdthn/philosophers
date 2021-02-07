@@ -36,6 +36,9 @@
 # define TIME 0
 # define ID 1
 # define STATUS 2
+# define LOCK_PRINT 1
+# define DONT_LOCK 0
+# define PHILO_START_OFFSET 42
 
 typedef struct		s_print_lock {
 	void			(* lock)(void);
@@ -107,6 +110,6 @@ unsigned long		get_current_time_stamp(void);
 
 unsigned long		get_time_offset(unsigned long start_time);
 
-void				print_status(t_attrs *attrs, int id, char *status);
+void				print_status(t_attrs *attrs, int id, char *status, bool lock_print);
 
 #endif

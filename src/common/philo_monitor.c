@@ -22,8 +22,9 @@ bool	is_died(t_philo_attrs *philo, t_attrs *program)
 
 int		kill_philo(t_attrs *program, t_philo_attrs *philo)
 {
+	program->print_lock.lock();
+	print_status(program, philo->id, DIE, DONT_LOCK);
 	free(program->philo_attrs);
-	print_status(program, philo->id, DIE);
 	return (EXIT_SUCCESS);
 }
 

@@ -45,13 +45,14 @@ static void	write_line(char **strings, int *lens)
 	free(line_start);
 }
 
-void		print_status(t_attrs *attrs, int id, char *status)
+void		print_status(t_attrs *attrs, int id, char *status, bool lock_print)
 {
 	int				lens[3];
 	char			*strings[3];
 	unsigned long	time_offset;
 
-	attrs->print_lock.lock();
+	if (lock_print)
+		attrs->print_lock.lock();
 	time_offset = get_time_offset(attrs->start_time);
 	if (get_numbers(time_offset, id, strings, lens))
 	{
@@ -61,5 +62,6 @@ void		print_status(t_attrs *attrs, int id, char *status)
 	}
 	free(strings[TIME]);
 	free(strings[ID]);
-	attrs->print_lock.unlock();
+	if (lock_print)
+		attrs->print_lock.unlock();
 }
