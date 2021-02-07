@@ -52,6 +52,7 @@ typedef struct		s_philo_attrs {
 }					t_philo_attrs;
 
 typedef struct		s_attrs {
+	bool			is_ready;
 	int				n_philo;
 	int				time_to_eat;
 	int				time_to_sleep;
