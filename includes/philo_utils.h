@@ -25,7 +25,7 @@
 # define USEC_IN_MILLIS 1000
 # define MONITOR_FREQUENCY_USEC 1000
 # define UNSPECIFIED -1
-# define MAGIC_CONSTANT 8
+# define MAGIC_CONSTANT 50
 # define FORKS_SEM_NAME "/forks"
 # define FORKS_SEM_FLAGS 0644
 # define EAT " is eating\n"

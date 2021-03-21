@@ -28,7 +28,7 @@ static void	*philo_process(void *arg)
 	while (!program->attrs.is_ready)
 		ft_usleep(1);
 	if (philosopher->attrs.id % 2 == 0)
-		ft_usleep(program->attrs.time_to_eat / MAGIC_CONSTANT);
+		ft_usleep(MAGIC_CONSTANT);
 	while (!program->attrs.error)
 	{
 		take_forks(philosopher, program);
@@ -58,7 +58,6 @@ static bool	run_philosophers(t_philo_one *program)
 		argument->philosopher = philosopher;
 		if (pthread_create(&philosopher->thread, NULL, philo_process, argument))
 			return (false);
-		ft_usleep(PHILO_START_OFFSET);
 	}
 	program->attrs.is_ready = TRUE;
 	return (true);
