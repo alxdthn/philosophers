@@ -33,12 +33,12 @@ void	thinking(t_philo *philo, t_philo_one *program)
 
 void	take_forks(t_philo *philo, t_philo_one *program)
 {
-    //pthread_mutex_lock(&program->fork_taking_mutex);
+    pthread_mutex_lock(&program->fork_taking_mutex);
     pthread_mutex_lock(philo->right_hand_fork);
     print_status(&program->attrs, philo->attrs.id, FORK, LOCK_PRINT);
     pthread_mutex_lock(philo->left_hand_fork);
     print_status(&program->attrs, philo->attrs.id, FORK, LOCK_PRINT);
-    //pthread_mutex_unlock(&program->fork_taking_mutex);
+    pthread_mutex_unlock(&program->fork_taking_mutex);
 }
 
 void	drop_forks(t_philo *philo, t_philo_one *program)

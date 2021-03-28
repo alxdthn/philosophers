@@ -21,15 +21,10 @@ static void	*philo_process(void *arg)
 	argument = arg;
 	program = argument->program;
 	philosopher = argument->philosopher;
-    if (philosopher->attrs.id % 2 == 0) {
-        usleep(250);
-    }
 	philosopher->attrs.last_meal = get_current_time_stamp();
 	free(argument);
-	pthread_detach(philosopher->thread);
-	program->attrs.ready_philo_number++;
-
-	printf("START %d\n", philosopher->attrs.id);
+	if (philosopher->attrs.id % 2 == 0)
+		usleep(250);
 	while (!program->attrs.error)
 	{
 		take_forks(philosopher, program);
@@ -41,7 +36,7 @@ static void	*philo_process(void *arg)
 	return (NULL);
 }
 
-static bool	run_philosophers(t_philo_one *program)
+static void 	run_philosophers(t_philo_one *program)
 {
 	t_philo_process_argument	*argument;
 	t_philo						*philosopher;
@@ -53,16 +48,13 @@ static bool	run_philosophers(t_philo_one *program)
 	{
 		philosopher = &program->philosophers[i++];
 		argument = malloc(sizeof(t_philo_process_argument));
-		if (!argument)
-			return (false);
 		argument->program = program;
 		argument->philosopher = philosopher;
-		if (pthread_create(&philosopher->thread, NULL, philo_process, argument))
-			return (false);
-        usleep(250);
+		philosopher->attrs.last_meal = get_current_time_stamp();
+		pthread_create(&philosopher->thread, NULL, philo_process, argument);
+		pthread_detach(philosopher->thread);
 	}
 	program->attrs.is_ready = TRUE;
-	return (true);
 }
 
 int			main(int ac, char **av)
@@ -72,15 +64,10 @@ int			main(int ac, char **av)
 	memset(&program, '\0', sizeof(t_philo_one));
 	if (parse_args(ac, av, &program.attrs))
 		return (1);
-	if (!create_forks(&program))
-		return (error("error init forks\n"));
-	if (pthread_mutex_init(&program.fork_taking_mutex, NULL))
-		return (error("error pthread mutex init\n"));
-	if (!create_philosophers(&program))
-		return (error("error init philosophers\n"));
-	if (!init_print_lock(&program))
-		return (error("error init print mutex"));
-	if (!run_philosophers(&program))
-		return (error("error run philosophers\n"));
+	create_forks(&program);
+	pthread_mutex_init(&program.fork_taking_mutex, NULL);
+	create_philosophers(&program);
+	init_print_lock(&program);
+	run_philosophers(&program);
 	return (monitor_process(&program.attrs));
 }

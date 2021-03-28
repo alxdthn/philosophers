@@ -38,6 +38,8 @@ int			parse_args(int ac, char **av, t_attrs *result)
 	result->eat_number = UNSPECIFIED;
 	if (get_and_validate_value(av[1], &result->n_philo, 1))
 		return (error("bad number of philo\n"));
+	if (result->n_philo > MAX_PHILO)
+		return (error("more than max philo\n"));
 	if (get_and_validate_value(av[2], (int *)&result->time_to_die, 1))
 		return (error("bad time to die\n"));
 	if (get_and_validate_value(av[3], &result->time_to_eat, USEC_IN_MILLIS))

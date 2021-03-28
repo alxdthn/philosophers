@@ -36,11 +36,11 @@ typedef struct		s_philo_process_argument {
 	t_philo_one		*program;
 }					t_philo_process_argument;
 
-bool				create_philosophers(t_philo_one *program);
+void 				create_philosophers(t_philo_one *program);
 
-bool				init_print_lock(t_philo_one *program);
+void 				init_print_lock(t_philo_one *program);
 
-bool				create_forks(t_philo_one *program);
+void 				create_forks(t_philo_one *program);
 
 void				eating(t_philo *philo, t_philo_one *program);
 

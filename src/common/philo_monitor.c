@@ -34,8 +34,6 @@ int		monitor_process(t_attrs *program)
 	register int	i;
 	int				should_kill_by_eat_num;
 
-	while (program->ready_philo_number < program->n_philo)
-		usleep(1);
 	while (true)
 	{
 		i = 0;
@@ -49,8 +47,6 @@ int		monitor_process(t_attrs *program)
 		}
 		if (program->eat_number != UNSPECIFIED && should_kill_by_eat_num)
 			return (EXIT_SUCCESS);
-		if (program->error)
-			return (error(program->error));
 		usleep(MONITOR_FREQUENCY_USEC);
 	}
 }

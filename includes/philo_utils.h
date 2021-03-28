@@ -25,7 +25,6 @@
 # define USEC_IN_MILLIS 1000
 # define MONITOR_FREQUENCY_USEC 1000
 # define UNSPECIFIED -1
-# define MAGIC_CONSTANT 50
 # define FORKS_SEM_NAME "/forks"
 # define FORKS_SEM_FLAGS 0644
 # define EAT " is eating\n"
@@ -38,7 +37,8 @@
 # define STATUS 2
 # define LOCK_PRINT 1
 # define DONT_LOCK 0
-# define PHILO_START_OFFSET 42
+# define PHILO_START_OFFSET 250
+# define MAX_PHILO 200
 
 typedef struct		s_print_lock {
 	void			(* lock)(void);

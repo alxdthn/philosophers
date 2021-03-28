@@ -22,11 +22,9 @@ static void	print_unlock(void)
 	pthread_mutex_unlock(&g_print_mutex);
 }
 
-bool		init_print_lock(t_philo_one *program)
+void 		init_print_lock(t_philo_one *program)
 {
-	if (pthread_mutex_init(&g_print_mutex, NULL))
-		return (false);
+	pthread_mutex_init(&g_print_mutex, NULL);
 	program->attrs.print_lock.lock = print_lock;
 	program->attrs.print_lock.unlock = print_unlock;
-	return (true);
 }
