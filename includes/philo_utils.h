@@ -91,8 +91,6 @@ int					error(const char *message);
 
 int					usage(char *file_name);
 
-void				safe_lock_mutex(pthread_mutex_t *mutex, char **error);
-
 void				safe_unlock_mutex(pthread_mutex_t *mutex, char **error);
 
 void				ft_usleep(unsigned long time);

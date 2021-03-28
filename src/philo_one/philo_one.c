@@ -21,14 +21,15 @@ static void	*philo_process(void *arg)
 	argument = arg;
 	program = argument->program;
 	philosopher = argument->philosopher;
-	philosopher->attrs.last_meal = program->attrs.start_time;
+    if (philosopher->attrs.id % 2 == 0) {
+        usleep(250);
+    }
+	philosopher->attrs.last_meal = get_current_time_stamp();
 	free(argument);
 	pthread_detach(philosopher->thread);
 	program->attrs.ready_philo_number++;
-	while (!program->attrs.is_ready)
-		ft_usleep(1);
-	if (philosopher->attrs.id % 2 == 0)
-		ft_usleep(MAGIC_CONSTANT);
+
+	printf("START %d\n", philosopher->attrs.id);
 	while (!program->attrs.error)
 	{
 		take_forks(philosopher, program);
@@ -58,6 +59,7 @@ static bool	run_philosophers(t_philo_one *program)
 		argument->philosopher = philosopher;
 		if (pthread_create(&philosopher->thread, NULL, philo_process, argument))
 			return (false);
+        usleep(250);
 	}
 	program->attrs.is_ready = TRUE;
 	return (true);
