@@ -52,13 +52,11 @@ typedef struct		s_philo_attrs {
 }					t_philo_attrs;
 
 typedef struct		s_attrs {
-	bool			is_ready;
 	int				n_philo;
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				eat_number;
 	int				ready_philo_number;
-	char			*error;
 	unsigned long	time_to_die;
 	unsigned long	start_time;
 	t_philo_attrs	**philo_attrs;
@@ -91,13 +89,7 @@ int					error(const char *message);
 
 int					usage(char *file_name);
 
-void				safe_unlock_mutex(pthread_mutex_t *mutex, char **error);
-
 void				ft_usleep(unsigned long time);
-
-void				safe_sem_wait_thread(sem_t *sem, char **error);
-
-void				safe_sem_post_thread(sem_t *sem, char **error);
 
 sem_t				*create_sem(unsigned long init_value, const char *name);
 

@@ -22,27 +22,21 @@ static void	print_unlock(void)
 	pthread_mutex_unlock(&g_print_mutex);
 }
 
-bool		init_print_lock(t_philo_two *program)
+void 		init_print_lock(t_philo_two *program)
 {
-	if (pthread_mutex_init(&g_print_mutex, NULL))
-		return (false);
+	pthread_mutex_init(&g_print_mutex, NULL);
 	program->attrs.print_lock.lock = print_lock;
 	program->attrs.print_lock.unlock = print_unlock;
-	return (true);
 }
 
-bool		create_philosophers(t_philo_two *program)
+void 		create_philosophers(t_philo_two *program)
 {
 	register int	i;
 	t_philo			*result;
 	t_philo_attrs	**philo_attrs;
 
 	result = malloc(sizeof(t_philo) * program->attrs.n_philo);
-	if (!result)
-		return (false);
 	philo_attrs = malloc(sizeof(t_philo_attrs *) * program->attrs.n_philo);
-	if (!philo_attrs)
-		return (false);
 	memset(result, '\0', sizeof(t_philo) * program->attrs.n_philo);
 	i = 0;
 	while (i < program->attrs.n_philo)
@@ -53,5 +47,4 @@ bool		create_philosophers(t_philo_two *program)
 	}
 	program->philosophers = result;
 	program->attrs.philo_attrs = philo_attrs;
-	return (true);
 }

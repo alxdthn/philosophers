@@ -17,21 +17,3 @@ sem_t	*create_sem(unsigned long init_value, const char *name)
 	sem_unlink(name);
 	return (sem_open(name, O_CREAT, FORKS_SEM_FLAGS, init_value));
 }
-
-void	safe_sem_wait_thread(sem_t *sem, char **error)
-{
-	if (sem_wait(sem) == -1)
-	{
-		*error = "error sem wait\n";
-		pthread_exit(NULL);
-	}
-}
-
-void	safe_sem_post_thread(sem_t *sem, char **error)
-{
-	if (sem_post(sem) == -1)
-	{
-		*error = "error sem wait\n";
-		pthread_exit(NULL);
-	}
-}

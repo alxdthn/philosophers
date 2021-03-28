@@ -17,13 +17,13 @@ void	eating(t_philo *philo, t_philo_two *program)
 	philo->attrs.eat_count++;
 	philo->attrs.last_meal = get_current_time_stamp();
 	print_status(&program->attrs, philo->attrs.id, EAT, LOCK_PRINT);
-	ft_usleep(program->attrs.time_to_eat);
+	usleep(program->attrs.time_to_eat);
 }
 
 void	sleeping(t_philo *philo, t_philo_two *program)
 {
 	print_status(&program->attrs, philo->attrs.id, SLEEP, LOCK_PRINT);
-	ft_usleep(program->attrs.time_to_sleep);
+	usleep(program->attrs.time_to_sleep);
 }
 
 void	thinking(t_philo *philo, t_philo_two *program)
@@ -33,16 +33,16 @@ void	thinking(t_philo *philo, t_philo_two *program)
 
 void	take_forks(t_philo *philo, t_philo_two *program)
 {
-	safe_lock_mutex(&program->fork_taking_mutex, &program->attrs.error);
-	safe_sem_wait_thread(program->forks_sem, &program->attrs.error);
+	pthread_mutex_lock(&program->fork_taking_mutex);
+	sem_wait(program->forks_sem);
 	print_status(&program->attrs, philo->attrs.id, FORK, LOCK_PRINT);
-	safe_sem_wait_thread(program->forks_sem, &program->attrs.error);
+	sem_wait(program->forks_sem);
 	print_status(&program->attrs, philo->attrs.id, FORK, LOCK_PRINT);
-	safe_unlock_mutex(&program->fork_taking_mutex, &program->attrs.error);
+	pthread_mutex_unlock(&program->fork_taking_mutex);
 }
 
 void	drop_forks(t_philo_two *program)
 {
-	safe_sem_post_thread(program->forks_sem, &program->attrs.error);
-	safe_sem_post_thread(program->forks_sem, &program->attrs.error);
+	sem_post(program->forks_sem);
+	sem_post(program->forks_sem);
 }

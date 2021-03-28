@@ -12,7 +12,7 @@
 
 #include "philo_two.h"
 
-int	exit_program(sem_t *sem, int exit_code)
+int	exit_program(const sem_t *sem, int exit_code)
 {
 	if (sem)
 		sem_unlink(FORKS_SEM_NAME);
