@@ -56,7 +56,6 @@ typedef struct		s_attrs {
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				eat_number;
-	int				ready_philo_number;
 	unsigned long	time_to_die;
 	unsigned long	start_time;
 	t_philo_attrs	**philo_attrs;
@@ -77,8 +76,6 @@ void				ft_putstr(const char *str);
 
 void				ft_putstr_fd(const char *str, int fd);
 
-void				ft_putnbr(unsigned long nbr);
-
 int					ft_atoi(const char *str);
 
 char				*ft_ultoa(unsigned long number, int *result_len);
@@ -88,8 +85,6 @@ void				ft_memcpy(void *dst, void *src, size_t size);
 int					error(const char *message);
 
 int					usage(char *file_name);
-
-void				ft_usleep(unsigned long time);
 
 sem_t				*create_sem(unsigned long init_value, const char *name);
 

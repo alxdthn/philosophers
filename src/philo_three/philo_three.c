@@ -27,31 +27,24 @@ static void	*monitor_thread(void *arg)
 			print_status(&program->prog_attrs, philosopher->id, DIE, DONT_LOCK);
 			exit(EXIT_BY_STARVATION);
 		}
-		if (program->prog_attrs.error)
-		{
-			error(program->prog_attrs.error);
-			exit(EXIT_BY_ERROR);
-		}
 		usleep(MONITOR_FREQUENCY_USEC);
 	}
 }
 
-static int	philosopher_process(t_philo_three *program)
+static void 	philosopher_process(t_philo_three *program)
 {
 	program->philosopher_attrs->last_meal = get_current_time_stamp();
 	while (true)
 	{
-		if (take_forks(program))
-			return (EXIT_FAILURE);
+		take_forks(program);
 		eating(program);
-		if (drop_forks(program))
-			return (EXIT_FAILURE);
+		drop_forks(program);
 		sleeping(program);
 		thinking(program);
 	}
 }
 
-static bool	fork_philosophers(t_philo_three *program)
+static void 	fork_philosophers(t_philo_three *program)
 {
 	register int	i;
 	t_philo_attrs	*philo_attrs;
@@ -59,26 +52,20 @@ static bool	fork_philosophers(t_philo_three *program)
 
 	i = 0;
 	program->children_pid = malloc(sizeof(pid_t) * program->prog_attrs.n_philo);
-	if (!program->children_pid)
-		return (false);
 	while (i < program->prog_attrs.n_philo)
 	{
 		pid = fork();
 		program->is_child = pid == 0;
 		philo_attrs = program->prog_attrs.philo_attrs[i];
 		philo_attrs->last_meal = get_current_time_stamp();
-		if (pid == 0)
+		if (program->is_child)
 		{
 			program->philosopher_attrs = philo_attrs;
-			return (true);
+			return ;
 		}
-		else if (pid > 0)
-			program->children_pid[i++] = pid;
-		else
-			return (false);
-		ft_usleep(PHILO_START_OFFSET);
+		program->children_pid[i++] = pid;
+		usleep(PHILO_START_OFFSET);
 	}
-	return (true);
 }
 
 static void resolve_fork(t_philo_three *program)
@@ -90,13 +77,12 @@ static void resolve_fork(t_philo_three *program)
 	max_eat_count = 0;
 	if (program->is_child)
 	{
-		if (pthread_create(&program->monitor, NULL, monitor_thread, program))
-			exit_program(program, error("pthread_create\n"));
+		pthread_create(&program->monitor, NULL, monitor_thread, program);
 		philosopher_process(program);
 	}
 	else
 	{
-		while (!(status & EXIT_BY_STARVATION) && !(status & EXIT_BY_ERROR))
+		while (!(status & EXIT_BY_STARVATION))
 		{
 			waitpid(-1, &status, 0);
 			if (!(status & EXIT_BY_EAT_COUNT))
@@ -116,18 +102,10 @@ int			main(int ac, char **av)
 	if (parse_args(ac, av, &program.prog_attrs))
 		exit_program(&program, EXIT_SUCCESS);
 	program.forks_sem = create_sem(program.prog_attrs.n_philo, FORKS_SEM_NAME);
-	if (program.forks_sem == SEM_FAILED)
-		exit_program(&program, error("error create semaphore\n"));
 	init_print_lock(&program);
-	if (g_print_sem == SEM_FAILED)
-		exit_program(&program, error("error create semaphore\n"));
 	g_forks_taking_sem = create_sem(1, FORKS_TAKING_SEM_NAME);
-	if (g_forks_taking_sem == SEM_FAILED)
-		exit_program(&program, error("error create semaphore\n"));
-	if (!create_philosophers(&program))
-		exit_program(&program, error("error init philosophers\n"));
+	create_philosophers(&program);
 	program.prog_attrs.start_time = get_current_time_stamp();
-	if (!fork_philosophers(&program))
-		exit_program(&program, error("error run philosophers\n"));
+	fork_philosophers(&program);
 	resolve_fork(&program);
 }

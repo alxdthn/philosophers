@@ -38,16 +38,3 @@ int		usage(char *file_name)
 	ft_putstr("the simulation will stop.\n");
 	return (1);
 }
-
-void	ft_usleep(unsigned long time)
-{
-	unsigned long	sleep_start;
-	unsigned long	current_time;
-	unsigned long	time_ms;
-
-	time_ms = time / 1000;
-	sleep_start = get_current_time_stamp();
-	current_time = sleep_start;
-	while (time_ms > current_time - sleep_start)
-		current_time = get_current_time_stamp();
-}

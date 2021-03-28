@@ -20,7 +20,6 @@
 # define FORKS_TAKING_SEM_NAME "/philo_three_forks_taking"
 # define EXIT_BY_STARVATION 12
 # define EXIT_BY_EAT_COUNT 13
-# define EXIT_BY_ERROR 14
 
 sem_t				*g_print_sem;
 sem_t				*g_forks_taking_sem;
@@ -34,7 +33,7 @@ typedef struct		s_philo_three {
 	pthread_t		monitor;
 }					t_philo_three;
 
-bool				create_philosophers(t_philo_three *program);
+void 				create_philosophers(t_philo_three *program);
 
 void				init_print_lock(t_philo_three *program);
 
@@ -44,9 +43,9 @@ void				eating(t_philo_three *program);
 
 void				sleeping(t_philo_three *program);
 
-int					take_forks(t_philo_three *program);
+void 				take_forks(t_philo_three *program);
 
-int					drop_forks(t_philo_three *program);
+void 				drop_forks(t_philo_three *program);
 
 void				thinking(t_philo_three *program);
 

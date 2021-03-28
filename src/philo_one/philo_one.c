@@ -25,7 +25,7 @@ static void	*philo_process(void *arg)
 	free(argument);
 	if (philosopher->attrs.id % 2 == 0)
 		usleep(250);
-	while (!program->attrs.error)
+	while (true)
 	{
 		take_forks(philosopher, program);
 		eating(philosopher, program);
@@ -33,7 +33,6 @@ static void	*philo_process(void *arg)
 		sleeping(philosopher, program);
 		thinking(philosopher, program);
 	}
-	return (NULL);
 }
 
 static void 	run_philosophers(t_philo_one *program)
@@ -54,7 +53,6 @@ static void 	run_philosophers(t_philo_one *program)
 		pthread_create(&philosopher->thread, NULL, philo_process, argument);
 		pthread_detach(philosopher->thread);
 	}
-	program->attrs.is_ready = TRUE;
 }
 
 int			main(int ac, char **av)

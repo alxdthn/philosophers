@@ -60,15 +60,3 @@ char	*get_file_name(char *str)
 	}
 	return (str);
 }
-
-void	ft_putnbr(unsigned long nbr)
-{
-	char	*nbr_string;
-	int		len;
-
-	nbr_string = ft_ultoa(nbr, &len);
-	if (!nbr_string)
-		return ;
-	write(1, nbr_string, len);
-	free(nbr_string);
-}

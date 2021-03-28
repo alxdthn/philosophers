@@ -16,7 +16,6 @@ HEADERS =			$(INCLUDES)philo_one.h \
 					$(INCLUDES)philo_utils.h
 
 COMMON_SRC =		src/common/philo_monitor.c \
-            		src/common/philo_mutex.c \
             		src/common/philo_parse.c \
             		src/common/philo_print.c \
             		src/common/philo_semaphore.c \
